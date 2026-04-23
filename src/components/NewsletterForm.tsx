@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { Check, ArrowRight } from 'lucide-react';
 import { notifySignup } from '@/app/actions';
 
 export default function NewsletterForm({ dropId }: { dropId?: string }) {
@@ -25,27 +26,35 @@ export default function NewsletterForm({ dropId }: { dropId?: string }) {
 
   if (done) {
     return (
-      <p className="flex items-center gap-2 text-sm text-accent">
-        ✓ Sei nel loop. Ci sentiamo al prossimo drop.
-      </p>
+      <div className="flex items-center gap-2 border border-success/30 bg-success/5 px-4 py-3 text-sm text-success animate-fade-in">
+        <Check size={16} strokeWidth={2.5} />
+        Sei nel loop. Ci sentiamo al prossimo drop.
+      </div>
     );
   }
 
   return (
-    <form onSubmit={submit} className="flex gap-0">
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="la-tua@email.com"
-        className="input flex-1"
-        disabled={pending}
-      />
-      <button type="submit" className="btn-primary px-5" disabled={pending}>
-        {pending ? '...' : 'Sign up'}
-      </button>
-      {error && <p className="mt-2 text-xs text-danger">{error}</p>}
-    </form>
+    <div className="flex flex-col gap-2">
+      <form onSubmit={submit} className="flex">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="la-tua@email.com"
+          className="input flex-1 border-r-0"
+          disabled={pending}
+        />
+        <button
+          type="submit"
+          className="btn-primary px-5"
+          disabled={pending}
+          aria-label="Iscriviti"
+        >
+          {pending ? '...' : <ArrowRight size={16} strokeWidth={2.5} />}
+        </button>
+      </form>
+      {error && <p className="text-xs text-danger animate-fade-in">{error}</p>}
+    </div>
   );
 }

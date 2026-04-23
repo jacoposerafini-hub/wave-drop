@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState, useTransition } from 'react';
-import { Minus, Plus, X } from 'lucide-react';
+import { Minus, Plus, X, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { formatPrice } from '@/lib/utils';
 import { removeFromCartAction, updateQtyAction } from '@/app/actions';
@@ -23,10 +23,15 @@ interface Props {
 export default function CartRow(props: Props) {
   const [pending, start] = useTransition();
   const router = useRouter();
-  const [timeLeft, setTimeLeft] = useState(() => Math.max(0, props.expiresAt - Date.now()));
+  const [timeLeft, setTimeLeft] = useState(() =>
+    Math.max(0, props.expiresAt - Date.now()),
+  );
 
   useEffect(() => {
-    const id = setInterval(() => setTimeLeft(Math.max(0, props.expiresAt - Date.now())), 1000);
+    const id = setInterval(
+      () => setTimeLeft(Math.max(0, props.expiresAt - Date.now())),
+      1000,
+    );
     return () => clearInterval(id);
   }, [props.expiresAt]);
 
@@ -34,11 +39,17 @@ export default function CartRow(props: Props) {
   const sec = Math.floor((timeLeft % 60000) / 1000);
 
   return (
-    <div className="flex gap-4 border border-border p-4">
+    <div className="group flex gap-4 border border-border bg-bg-elevated p-4 transition-colors hover:border-border-strong">
       <Link href={`/product/${props.slug}`} className="shrink-0">
-        <div className="relative h-28 w-24 bg-bg-elevated overflow-hidden">
+        <div className="relative h-32 w-28 overflow-hidden bg-bg-raised ring-soft">
           {props.image && (
-            <Image src={props.image} alt={props.name} fill sizes="96px" className="object-cover" />
+            <Image
+              src={props.image}
+              alt={props.name}
+              fill
+              sizes="112px"
+              className="object-cover transition-transform duration-500 ease-smooth group-hover:scale-105"
+            />
           )}
         </div>
       </Link>
@@ -46,48 +57,73 @@ export default function CartRow(props: Props) {
       <div className="flex flex-1 flex-col justify-between">
         <div>
           <div className="flex items-start justify-between gap-2">
-            <Link href={`/product/${props.slug}`} className="font-semibold hover:text-accent">
+            <Link
+              href={`/product/${props.slug}`}
+              className="font-semibold transition-colors hover:text-accent"
+            >
               {props.name}
             </Link>
             <button
-              onClick={() => start(async () => { await removeFromCartAction(props.variantId); router.refresh(); })}
+              onClick={() =>
+                start(async () => {
+                  await removeFromCartAction(props.variantId);
+                  router.refresh();
+                })
+              }
               aria-label="Rimuovi"
-              className="text-muted hover:text-danger"
+              className="text-muted transition-colors hover:text-danger"
+              disabled={pending}
             >
               <X size={16} />
             </button>
           </div>
-          <p className="mt-1 text-xs text-muted">Taglia {props.size}</p>
+          <p className="mt-1 text-xs uppercase tracking-widest text-muted">
+            Taglia {props.size}
+          </p>
           {timeLeft < 120000 && timeLeft > 0 && (
-            <p className="mt-1 text-[11px] text-danger">
-              Riservato: {String(min).padStart(2, '0')}:{String(sec).padStart(2, '0')}
+            <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-danger animate-fade-in">
+              <Clock size={11} />
+              Riservato: {String(min).padStart(2, '0')}:
+              {String(sec).padStart(2, '0')}
             </p>
           )}
         </div>
 
-        <div className="mt-2 flex items-center justify-between">
-          <div className="flex items-center border border-border">
+        <div className="mt-3 flex items-center justify-between">
+          <div className="flex items-center border border-border-strong">
             <button
-              onClick={() => start(async () => { await updateQtyAction(props.variantId, props.qty - 1); router.refresh(); })}
+              onClick={() =>
+                start(async () => {
+                  await updateQtyAction(props.variantId, props.qty - 1);
+                  router.refresh();
+                })
+              }
               disabled={pending}
-              className="flex h-9 w-9 items-center justify-center hover:bg-white/5"
+              className="flex h-9 w-9 items-center justify-center transition-colors hover:bg-white/5 disabled:opacity-40"
               aria-label="Diminuisci"
             >
               <Minus size={14} />
             </button>
-            <span className="flex h-9 min-w-10 items-center justify-center px-2 text-sm tabular-nums">
+            <span className="flex h-9 min-w-10 items-center justify-center px-2 text-sm font-semibold tabular-nums">
               {props.qty}
             </span>
             <button
-              onClick={() => start(async () => { await updateQtyAction(props.variantId, props.qty + 1); router.refresh(); })}
+              onClick={() =>
+                start(async () => {
+                  await updateQtyAction(props.variantId, props.qty + 1);
+                  router.refresh();
+                })
+              }
               disabled={pending}
-              className="flex h-9 w-9 items-center justify-center hover:bg-white/5"
+              className="flex h-9 w-9 items-center justify-center transition-colors hover:bg-white/5 disabled:opacity-40"
               aria-label="Aumenta"
             >
               <Plus size={14} />
             </button>
           </div>
-          <p className="display text-xl tabular-nums">{formatPrice(props.lineCents)}</p>
+          <p className="display text-xl tabular-nums">
+            {formatPrice(props.lineCents)}
+          </p>
         </div>
       </div>
     </div>
