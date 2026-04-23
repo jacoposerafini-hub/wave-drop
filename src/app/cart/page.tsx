@@ -1,60 +1,70 @@
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Lock } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { getCartWithDetails } from '@/lib/cart';
 import { formatPrice } from '@/lib/utils';
 import CartRow from './cart-row';
 
 export const dynamic = 'force-dynamic';
 
-const FREE_SHIPPING_THRESHOLD = 10000;
+const FREE_SHIPPING_THRESHOLD = 8000;
 
 export default async function CartPage() {
   const { items, subtotalCents } = await getCartWithDetails();
 
   if (items.length === 0) {
     return (
-      <div className="relative flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-[100px]" />
-        <div className="relative flex flex-col items-center">
-          <p className="eyebrow mb-3">Cart</p>
-          <h1 className="display text-6xl md:text-8xl">VUOTO</h1>
-          <p className="mt-4 max-w-md text-muted">
+      <main className="page-enter container">
+        <div className="notfound">
+          <div className="notfound__code">Carrello</div>
+          <h1 className="notfound__title">
+            Vuoto<span className="italic">.</span>
+          </h1>
+          <p
+            style={{
+              color: 'var(--fg-dim)',
+              maxWidth: 420,
+              margin: '0 auto 28px',
+            }}
+          >
             Niente nel carrello. Torna al drop.
           </p>
-          <Link href="/" className="btn-primary group mt-8 h-12 px-6">
-            Shop the drop
-            <ArrowRight
-              size={14}
-              className="transition-transform group-hover:translate-x-1"
-            />
+          <Link href="/" className="btn primary">
+            Shop the drop <ArrowRight size={16} />
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
 
-  const shipping = subtotalCents >= FREE_SHIPPING_THRESHOLD ? 0 : 700;
+  const shipping =
+    subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0 ? 0 : 800;
   const total = subtotalCents + shipping;
-  const shipProgress = Math.min(100, (subtotalCents / FREE_SHIPPING_THRESHOLD) * 100);
+  const shipProgress = Math.min(
+    100,
+    (subtotalCents / FREE_SHIPPING_THRESHOLD) * 100,
+  );
   const missing = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotalCents);
 
   return (
-    <div className="mx-auto max-w-[1200px] px-5 py-10 md:px-10 md:py-16">
-      <div className="mb-10 flex items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow mb-3">Cart</p>
-          <h1 className="display text-5xl md:text-7xl">CARRELLO</h1>
+    <main className="page-enter container">
+      <div className="section-head" style={{ paddingTop: 56 }}>
+        <div className="section-head__l">Carrello</div>
+        <div className="section-head__r">
+          Riservato per 10 minuti. Continua e completa l&apos;ordine prima che il
+          timer scada.
         </div>
-        <Link
-          href="/"
-          className="hidden items-center gap-1.5 text-xs uppercase tracking-widest text-muted transition-colors hover:text-white md:inline-flex"
-        >
-          <ArrowLeft size={14} /> Continua shopping
-        </Link>
       </div>
 
-      <div className="grid gap-10 md:grid-cols-12">
-        <div className="flex flex-col gap-4 md:col-span-8">
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 0.8fr)',
+          gap: 40,
+          alignItems: 'start',
+        }}
+        className="cart-grid"
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {items.map((item) => (
             <CartRow
               key={item.variantId}
@@ -71,83 +81,98 @@ export default async function CartPage() {
           ))}
         </div>
 
-        <aside className="md:col-span-4">
-          <div className="flex flex-col gap-5 border border-border-strong bg-bg-elevated p-6 md:sticky md:top-24">
-            <p className="eyebrow">Riepilogo</p>
-
-            <div className="flex flex-col gap-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-muted">Subtotale</span>
-                <span className="tabular-nums">{formatPrice(subtotalCents)}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-muted">Spedizione</span>
-                <span className="tabular-nums">
-                  {shipping === 0 ? (
-                    <span className="text-success">Gratis</span>
-                  ) : (
-                    formatPrice(shipping)
-                  )}
-                </span>
-              </div>
-            </div>
-
-            {/* Free shipping progress */}
-            {subtotalCents < FREE_SHIPPING_THRESHOLD ? (
-              <div className="flex flex-col gap-2">
-                <div className="h-1 w-full overflow-hidden bg-bg-sunken">
-                  <div
-                    className="h-full bg-accent transition-all duration-500 ease-smooth"
-                    style={{ width: `${shipProgress}%` }}
-                  />
-                </div>
-                <p className="text-xs text-muted">
-                  Aggiungi{' '}
-                  <span className="font-semibold text-white">
-                    {formatPrice(missing)}
-                  </span>{' '}
-                  per spedizione gratis.
-                </p>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 border border-success/30 bg-success/5 px-3 py-2 text-xs text-success">
-                <span className="h-1.5 w-1.5 rounded-full bg-success" />
-                Spedizione gratuita sbloccata
-              </div>
-            )}
-
-            <div className="divider-x" />
-
-            <div className="flex items-baseline justify-between">
-              <span className="eyebrow">Totale</span>
-              <span className="display text-3xl tabular-nums">
-                {formatPrice(total)}
-              </span>
-            </div>
-
-            <form action="/api/checkout" method="POST">
-              <button type="submit" className="btn-primary group h-14 w-full">
-                <Lock size={14} /> Checkout sicuro
-                <ArrowRight
-                  size={14}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </button>
-            </form>
-
-            <Link
-              href="/"
-              className="text-center text-xs uppercase tracking-widest text-muted transition-colors hover:text-white md:hidden"
-            >
-              ← Continua shopping
-            </Link>
-
-            <p className="text-center text-[10px] uppercase tracking-ultra text-subtle">
-              Pagamento protetto · Stripe
-            </p>
+        <aside
+          style={{
+            position: 'sticky',
+            top: 96,
+            border: '1px solid var(--line-2)',
+            borderRadius: 'var(--r-lg)',
+            padding: 24,
+            background:
+              'linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+          }}
+        >
+          <div className="eyebrow" style={{ marginBottom: 18 }}>
+            Riepilogo
           </div>
+
+          <div className="drawer__row">
+            <span>Subtotale</span>
+            <span>{formatPrice(subtotalCents)}</span>
+          </div>
+          <div className="drawer__row">
+            <span>Spedizione</span>
+            <span>
+              {shipping === 0 ? (
+                <span style={{ color: 'var(--accent)' }}>
+                  Gratis · sopra €80
+                </span>
+              ) : (
+                formatPrice(shipping)
+              )}
+            </span>
+          </div>
+
+          {subtotalCents < FREE_SHIPPING_THRESHOLD && (
+            <div style={{ marginTop: 14, marginBottom: 4 }}>
+              <div className="shipbar">
+                <div
+                  className="shipbar__fill"
+                  style={{ width: `${shipProgress}%` }}
+                />
+              </div>
+              <p
+                style={{
+                  fontSize: 12,
+                  color: 'var(--fg-mute)',
+                  marginTop: 8,
+                }}
+              >
+                Aggiungi{' '}
+                <span style={{ color: 'var(--fg)', fontWeight: 500 }}>
+                  {formatPrice(missing)}
+                </span>{' '}
+                per spedizione gratis.
+              </p>
+            </div>
+          )}
+
+          <div className="drawer__total">
+            <span className="k">Totale</span>
+            <span className="v tnum">{formatPrice(total)}</span>
+          </div>
+
+          <form action="/api/checkout" method="POST">
+            <button
+              type="submit"
+              className="btn primary"
+              style={{ width: '100%' }}
+            >
+              Checkout <ArrowRight size={16} />
+            </button>
+          </form>
+
+          <p
+            style={{
+              textAlign: 'center',
+              marginTop: 14,
+              fontSize: 10,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'var(--fg-mute)',
+              fontFamily: 'var(--font-mono)',
+            }}
+          >
+            Pagamento protetto · Stripe
+          </p>
         </aside>
       </div>
-    </div>
+
+      <div style={{ marginTop: 32 }}>
+        <Link href="/" className="eyebrow">
+          ← Continua shopping
+        </Link>
+      </div>
+    </main>
   );
 }

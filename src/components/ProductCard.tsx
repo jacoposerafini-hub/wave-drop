@@ -1,6 +1,7 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 
 interface Props {
@@ -10,6 +11,8 @@ interface Props {
   images: string[];
   stockTotal: number;
   stockAvailable: number;
+  index?: string;
+  type?: string;
 }
 
 export default function ProductCard({
@@ -17,61 +20,47 @@ export default function ProductCard({
   name,
   priceCents,
   images,
-  stockTotal,
+  stockTotal: _stockTotal,
   stockAvailable,
+  index,
+  type,
 }: Props) {
-  const low = stockAvailable > 0 && stockAvailable < stockTotal * 0.2;
-  const soldOut = stockAvailable === 0;
+  const soldOut = stockAvailable <= 0;
+  const low = !soldOut && stockAvailable <= 5;
+
+  let tag: { label: string; cls: string } | null = null;
+  if (soldOut) tag = { label: 'Sold out', cls: 'sold' };
+  else if (low) tag = { label: 'Ultimi pezzi', cls: 'new' };
 
   return (
-    <Link href={`/product/${slug}`} className="group block">
-      <div className="relative aspect-[4/5] overflow-hidden bg-bg-elevated ring-soft">
-        {images[0] && (
+    <Link href={`/product/${slug}`} className="product">
+      <div className="product__media">
+        {tag && <span className={`product__tag ${tag.cls}`}>{tag.label}</span>}
+        {images[0] ? (
           <Image
             src={images[0]}
             alt={name}
             fill
-            sizes="(min-width: 768px) 33vw, 50vw"
-            className="object-cover transition-transform duration-[600ms] ease-smooth group-hover:scale-[1.04]"
+            sizes="(min-width: 1100px) 25vw, 50vw"
+            style={{ objectFit: 'cover' }}
           />
-        )}
-        {images[1] && (
-          <Image
-            src={images[1]}
-            alt=""
-            fill
-            sizes="(min-width: 768px) 33vw, 50vw"
-            className="object-cover opacity-0 transition-opacity duration-400 ease-smooth group-hover:opacity-100"
-          />
-        )}
-
-        {/* Gradient bottom */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-        {/* Hover arrow */}
-        <div className="pointer-events-none absolute right-3 top-3 flex h-9 w-9 items-center justify-center bg-white text-black opacity-0 transition-all duration-300 ease-smooth group-hover:translate-y-0 group-hover:opacity-100 translate-y-1">
-          <ArrowUpRight size={16} strokeWidth={2} />
-        </div>
-
-        {soldOut && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/65 backdrop-blur-[2px]">
-            <span className="pill bg-white text-black">Sold out</span>
+        ) : (
+          <div className="product__placeholder">
+            [ product shot ]
+            <br />
+            <br />
+            {name}
           </div>
         )}
-        {!soldOut && low && (
-          <span className="pill absolute left-3 top-3 bg-danger text-white shadow-glow-pink-soft">
-            Left {stockAvailable}
-          </span>
-        )}
+        {index && <span className="product__index">{index}</span>}
       </div>
-
-      <div className="mt-3 flex items-baseline justify-between gap-4">
-        <p className="text-sm font-semibold tracking-wide transition-colors group-hover:text-accent">
-          {name}
-        </p>
-        <p className="font-display text-lg tabular-nums text-white">
-          {formatPrice(priceCents)}
-        </p>
+      <div className="product__body">
+        <div className="product__name">{name}</div>
+        <div className="product__price">{formatPrice(priceCents)}</div>
+      </div>
+      <div className="product__sub">
+        <span>{type || ' '}</span>
+        <span>{soldOut ? 'Sold out' : `${stockAvailable} pz`}</span>
       </div>
     </Link>
   );

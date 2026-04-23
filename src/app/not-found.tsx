@@ -1,29 +1,27 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-pink/5 blur-[120px]" />
-      <div className="relative flex flex-col items-center">
-        <p className="pill bg-danger/10 text-danger">
-          <span className="h-1.5 w-1.5 animate-glow-pulse rounded-full bg-danger" />
-          404
-        </p>
-        <h1 className="display mt-4 text-[22vw] leading-[0.85] md:text-[12vw]">
-          LOST.
+    <main className="page-enter container">
+      <div className="notfound">
+        <div className="notfound__code">404 / lost</div>
+        <h1 className="notfound__title">
+          Sold <span className="italic">out.</span>
         </h1>
-        <p className="mt-4 max-w-md text-muted">
-          Questa pagina non esiste. O forse è già sold out.
+        <p
+          style={{
+            color: 'var(--fg-dim)',
+            maxWidth: 420,
+            margin: '0 auto 28px',
+          }}
+        >
+          Questa pagina non è disponibile. Torna al drop corrente.
         </p>
-        <Link href="/" className="btn-primary group mt-10 h-12 px-6">
-          <ArrowLeft
-            size={14}
-            className="transition-transform group-hover:-translate-x-1"
-          />
-          Torna al drop
+        <Link href="/" className="btn primary">
+          Torna al drop <ArrowRight size={16} />
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

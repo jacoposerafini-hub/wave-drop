@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { cookies } from 'next/headers';
-import { ArrowDown, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { db } from '@/lib/db';
 import ProductCard from '@/components/ProductCard';
 import DropCountdown from '@/components/DropCountdown';
@@ -9,6 +8,8 @@ import PasswordGate from '@/components/PasswordGate';
 import NewsletterForm from '@/components/NewsletterForm';
 
 export const revalidate = 60;
+
+const HERO_META = ['6 pezzi', 'Lucca, IT', '22:22 CET'];
 
 export default async function HomePage() {
   const drop = await db.drop.findFirst({
@@ -33,217 +34,159 @@ export default async function HomePage() {
     drop.status === 'upcoming' && drop.startsAt && drop.startsAt > new Date();
 
   return (
-    <div className="relative">
+    <main className="page-enter">
       {/* HERO */}
-      <section className="relative -mt-16 h-[100svh] min-h-[640px] w-full overflow-hidden">
-        {drop.heroVideo ? (
-          <video
-            src={drop.heroVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        ) : drop.heroImage ? (
-          <Image
-            src={drop.heroImage}
-            alt={drop.name}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-grad-cosmic" />
-        )}
-
-        {/* Overlay stack */}
-        <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/50 to-bg-primary/10" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.4)_100%)]" />
-
-        <div className="absolute inset-0 mx-auto flex max-w-[1600px] flex-col justify-end px-5 pb-14 pt-24 md:px-10 md:pb-20">
-          <div className="stagger flex flex-col gap-6 md:gap-8">
-            <span
-              className={
-                isUpcoming
-                  ? 'pill self-start bg-white text-black'
-                  : 'pill relative self-start bg-danger text-white animate-pulse-ring'
-              }
-            >
-              {isUpcoming ? (
-                <>
-                  <span className="h-1.5 w-1.5 animate-glow-pulse rounded-full bg-black" />
-                  Upcoming
-                </>
-              ) : (
-                <>
-                  <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                  Live now
-                </>
-              )}
-            </span>
-
-            <h1 className="display max-w-6xl text-[15vw] leading-[0.82] md:text-[10vw]">
-              {drop.name}
+      <section className="hero container">
+        <div className="hero__grid">
+          <div>
+            <div className="eyebrow">
+              <span className="dot" />
+              {drop.name} · Notte
+            </div>
+            <h1 className="hero__title" style={{ marginTop: 20 }}>
+              <span>Vivi</span>{' '}
+              <span className="italic">la notte</span>
             </h1>
-
-            {drop.tagline && (
-              <p className="max-w-xl text-base leading-relaxed text-white/80 md:text-lg">
-                {drop.tagline}
-              </p>
-            )}
-
-            {isUpcoming && drop.startsAt ? (
-              <div className="flex flex-col gap-6">
-                <DropCountdown target={drop.startsAt} />
-                <div className="max-w-sm">
-                  <p className="eyebrow mb-3">Notify me</p>
-                  <NewsletterForm dropId={drop.id} />
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-wrap items-center gap-3">
-                <Link
-                  href="#shop"
-                  className="btn-primary group h-14 px-8 text-sm"
-                >
-                  Shop the drop
-                  <ArrowRight
-                    size={16}
-                    strokeWidth={2.5}
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  />
-                </Link>
-                <Link
-                  href={`/drop/${drop.slug}`}
-                  className="btn-ghost h-14 px-8 text-sm"
-                >
-                  Lookbook
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        {!isUpcoming && (
-          <div className="pointer-events-none absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted animate-float">
-            <span className="text-[10px] uppercase tracking-ultra">Scroll</span>
-            <ArrowDown size={14} strokeWidth={1.5} />
-          </div>
-        )}
-      </section>
-
-      {/* MARQUEE STRIP */}
-      {!isUpcoming && (
-        <div className="relative overflow-hidden border-y border-border bg-bg-sunken py-4">
-          <div className="flex w-max animate-marquee-fast gap-10 whitespace-nowrap text-xs font-semibold uppercase tracking-ultra text-muted">
-            {[...Array(2)].map((_, dup) => (
-              <div key={dup} className="flex gap-10">
-                {['Produzione limitata', 'Spedizione 3-5 gg', 'Reso gratuito 14gg', 'Made in Italy', 'Drop #1'].map(
-                  (t, i) => (
-                    <span key={`${dup}-${i}`} className="flex items-center gap-10">
-                      {t}
-                      <span className="text-accent">◆</span>
-                    </span>
-                  ),
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* PRODUCTS */}
-      {!isUpcoming && (
-        <section
-          id="shop"
-          className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24"
-        >
-          <div className="mb-10 flex items-end justify-between gap-6">
-            <div>
-              <p className="eyebrow mb-3">The drop</p>
-              <h2 className="display text-5xl md:text-7xl">
-                {drop.products.length} pezzi
-              </h2>
+            <div className="hero__meta">
+              {HERO_META.map((m) => (
+                <span key={m} className="chip">
+                  {m}
+                </span>
+              ))}
             </div>
-            <p className="hidden max-w-xs text-right text-sm leading-relaxed text-muted md:block">
-              Produzione limitata.<br />
-              Una volta finita, è finita.
+            <p className="hero__copy">
+              {drop.tagline ||
+                'Drop 007 disponibile dal 17 maggio, alle 22:22. Sei pezzi, produzione limitata, realizzati in Italia. Una volta esauriti, non torneranno più in stock.'}
             </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-8">
-            {drop.products.map((p) => {
-              const total = p.variants.reduce((s, v) => s + v.stock, 0);
-              const avail = p.variants.reduce(
-                (s, v) => s + (v.stock - v.reserved),
-                0,
-              );
-              return (
-                <ProductCard
-                  key={p.id}
-                  slug={p.slug}
-                  name={p.name}
-                  priceCents={p.priceCents}
-                  images={p.images}
-                  stockTotal={total}
-                  stockAvailable={avail}
-                />
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-      {/* ABOUT THE DROP */}
-      {drop.description && (
-        <section className="border-t border-border">
-          <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-16 md:grid-cols-12 md:gap-16 md:px-10 md:py-28">
-            <div className="md:col-span-4">
-              <p className="eyebrow mb-4">About</p>
-              <p className="display text-4xl leading-[0.95] md:text-5xl">
-                La storia<br />del drop
-              </p>
-              <div className="mt-6 h-px w-16 bg-accent" />
-            </div>
-            <div className="md:col-span-7 md:col-start-6">
-              <p className="text-lg leading-relaxed text-white/85 md:text-xl">
-                {drop.description}
-              </p>
-              <Link
-                href={`/drop/${drop.slug}`}
-                className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-accent link-underline"
-              >
-                Vedi lookbook <ArrowRight size={14} />
+            <div className="row" style={{ marginTop: 24 }}>
+              <Link href="#shop" className="btn primary">
+                Entra nel drop <ArrowRight size={16} />
+              </Link>
+              <Link href={`/drop/${drop.slug}`} className="btn ghost">
+                Vedi i pezzi
               </Link>
             </div>
           </div>
+          <aside className="hero__aside">
+            {isUpcoming && drop.startsAt ? (
+              <DropCountdown target={drop.startsAt} />
+            ) : (
+              <DropCountdown target={drop.endsAt || new Date(Date.now() + 7 * 86400000)} />
+            )}
+            <div>
+              <div className="eyebrow" style={{ marginBottom: 10 }}>
+                Avviso 48h prima
+              </div>
+              <NewsletterForm dropId={drop.id} />
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section className="hero-stack">
+        <div className="hero-stack__left">
+          <div className="media tall play" data-label="Video loop · Drop 007 campaign" />
+          <div className="media square" data-label="Foto · Behind the scenes" />
+          <div className="media square" data-label="Flyer · 17.05 — 22:22" />
+        </div>
+        <div className="hero-stack__right">
+          <div className="media wide" data-label="Lookbook · Notturno Hoodie" />
+          <div className="media wide" data-label="Lookbook · Cap 22:22" />
+        </div>
+      </section>
+
+      <div className="container" id="shop">
+        <div className="section-head">
+          <div className="section-head__l">
+            Il <span className="italic">Drop</span>
+          </div>
+          <div className="section-head__r">
+            Ogni pezzo disponibile fino a esaurimento. Nessun riassortimento,
+            nessuna ristampa.
+          </div>
+        </div>
+        <div className="eyebrow" style={{ marginBottom: 18 }}>
+          007 · {drop.products.length} pezzi · realizzati in Italia
+        </div>
+        <div className="product-grid">
+          {drop.products.slice(0, 4).map((p, i) => {
+            const total = p.variants.reduce((s, v) => s + v.stock, 0);
+            const avail = p.variants.reduce(
+              (s, v) => s + (v.stock - v.reserved),
+              0,
+            );
+            return (
+              <ProductCard
+                key={p.id}
+                slug={p.slug}
+                name={p.name}
+                priceCents={p.priceCents}
+                images={p.images}
+                stockTotal={total}
+                stockAvailable={avail}
+                index={`${String(i + 1).padStart(2, '0')}/${String(drop.products.length).padStart(2, '0')}`}
+              />
+            );
+          })}
+        </div>
+        {drop.products.length > 4 && (
+          <div className="row" style={{ justifyContent: 'center', marginTop: 28 }}>
+            <Link href={`/drop/${drop.slug}`} className="btn ghost">
+              Vedi tutti i pezzi <ArrowRight size={16} />
+            </Link>
+          </div>
+        )}
+
+        <section className="editorial">
+          <div className="editorial__text">
+            <div className="eyebrow" style={{ marginBottom: 14 }}>
+              Dietro il drop
+            </div>
+            <h3>Una città, sei pezzi.</h3>
+            <p>
+              Ogni capo è ispirato a un momento della notte di Lucca — dal
+              tramonto alle ore piccole. Prodotti tra Prato e Lucca, tirature
+              ridotte, nessun restock.
+            </p>
+            <div className="row" style={{ marginTop: 20 }}>
+              <Link href="/about" className="btn ghost sm">
+                Chi siamo <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+          <div
+            className="editorial__img-a media portrait"
+            data-label="Lookbook · Staff Tee"
+          />
+          <div className="editorial__img-b media tall" data-label="Mood · 22:22" />
         </section>
-      )}
-    </div>
+      </div>
+    </main>
   );
 }
 
 function NoDropState() {
   return (
-    <div className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-[120px]" />
-      <div className="relative flex flex-col items-center">
-        <p className="pill bg-white/5 text-muted backdrop-blur-sm">
-          <span className="h-1.5 w-1.5 animate-glow-pulse rounded-full bg-accent" />
-          Stay tuned
+    <main className="page-enter container">
+      <div className="notfound">
+        <div className="notfound__code">stay tuned</div>
+        <h1 className="notfound__title">
+          In <span className="italic">arrivo.</span>
+        </h1>
+        <p
+          style={{
+            color: 'var(--fg-dim)',
+            maxWidth: 420,
+            margin: '0 auto 28px',
+          }}
+        >
+          Il primo drop sta prendendo forma. Iscriviti per essere il primo a
+          saperlo.
         </p>
-        <h1 className="display mt-4 text-6xl md:text-9xl">IN ARRIVO</h1>
-        <p className="mt-4 max-w-md text-muted">
-          Il primo drop sta prendendo forma.<br />
-          Iscriviti per essere il primo a saperlo.
-        </p>
-        <div className="mt-10 w-full max-w-sm">
+        <div style={{ maxWidth: 380, margin: '0 auto' }}>
           <NewsletterForm />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

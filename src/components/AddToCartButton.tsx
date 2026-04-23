@@ -2,9 +2,8 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ShoppingBag } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import { addToCartAction } from '@/app/actions';
-import { cn } from '@/lib/utils';
 
 interface Variant {
   id: string;
@@ -49,35 +48,43 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
       <div>
-        <div className="mb-3 flex items-center justify-between">
-          <p className="eyebrow">Taglia</p>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}
+        >
+          <div className="eyebrow">Taglia</div>
           {selVariant && available > 0 && available < 10 && (
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-danger">
-              Left {available}
-            </p>
+            <span
+              className="chip live"
+              style={{ fontSize: 10 }}
+            >{`Ultimi ${available}`}</span>
           )}
         </div>
-        <div className={cn('flex flex-wrap gap-2', shake && 'animate-shake')}>
+        <div className={'size-row' + (shake ? ' shake' : '')}>
           {variants.map((v) => {
             const out = v.stock - v.reserved <= 0;
+            const avail = v.stock - v.reserved;
+            const low = !out && avail <= 2;
             const active = selected === v.id;
             return (
               <button
                 key={v.id}
                 onClick={() => !out && setSelected(v.id)}
                 disabled={out}
-                className={cn(
-                  'h-12 min-w-[56px] px-3 border text-sm font-semibold uppercase tracking-widest transition-all duration-200 ease-smooth',
-                  out
-                    ? 'border-border text-muted line-through opacity-40 cursor-not-allowed'
-                    : active
-                      ? 'border-accent bg-accent text-black shadow-glow-soft'
-                      : 'border-border-strong hover:border-white/50 hover:bg-white/5',
-                )}
+                className={
+                  'size-btn' +
+                  (active ? ' active' : '') +
+                  (out ? ' out' : low ? ' low' : '')
+                }
               >
                 {v.size}
+                {low && !out && ` · ${avail}`}
               </button>
             );
           })}
@@ -87,10 +94,12 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
       <button
         onClick={add}
         disabled={pending || allSoldOut}
-        className={cn(
-          'btn-primary h-14 w-full text-base',
-          allSoldOut && 'bg-white/10 text-muted hover:shadow-none',
-        )}
+        className="btn primary"
+        style={{
+          width: '100%',
+          opacity: allSoldOut ? 0.5 : 1,
+          cursor: allSoldOut ? 'not-allowed' : 'pointer',
+        }}
       >
         {allSoldOut ? (
           'Sold out'
@@ -98,20 +107,21 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
           'Aggiunta...'
         ) : (
           <>
-            <ShoppingBag size={16} strokeWidth={2} />
-            Add to cart
+            <ShoppingBag size={16} />
+            Aggiungi al carrello
           </>
         )}
       </button>
 
       {msg.type && (
         <p
-          className={cn(
-            'flex items-center gap-1.5 text-sm animate-fade-in',
-            msg.type === 'ok' ? 'text-success' : 'text-danger',
-          )}
+          style={{
+            fontSize: 13,
+            color:
+              msg.type === 'ok' ? 'var(--accent)' : 'var(--danger)',
+          }}
         >
-          {msg.type === 'ok' && <Check size={14} />}
+          {msg.type === 'ok' ? '✓ ' : ''}
           {msg.text}
         </p>
       )}
