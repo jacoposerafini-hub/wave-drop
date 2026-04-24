@@ -1008,3 +1008,32 @@ img, svg { display: block; max-width: 100%; }
 /* Fade-in utility */
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .fade-in { animation: fade-in 300ms var(--ease); }
+
+/* Cookie banner */
+.cookie-banner {
+  position: fixed;
+  left: 16px; right: 16px; bottom: 16px;
+  z-index: 700;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  animation: slide-up 320ms var(--ease);
+}
+@keyframes slide-up { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.cookie-banner__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; padding: 18px 22px;
+  flex-wrap: wrap;
+}
+.cookie-banner__text { flex: 1; min-width: 260px; }
+.cookie-banner__text p {
+  font-size: 13.5px; line-height: 1.55;
+  color: var(--fg-dim);
+  max-width: 720px;
+}
+.cookie-banner__actions { display: flex; gap: 10px; flex-shrink: 0; }
+@media (max-width: 640px) {
+  .cookie-banner__actions { width: 100%; }
+  .cookie-banner__actions .btn { flex: 1; justify-content: center; }
+}

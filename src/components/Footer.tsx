@@ -87,6 +87,7 @@ export default function Footer() {
           <span>© 2026 Wave Staff · Lucca, IT · P.IVA 00000000000</span>
           <span>
             <Link href="/privacy">Privacy</Link>
+            <Link href="/cookies">Cookie</Link>
             <Link href="/terms">Termini</Link>
           </span>
         </div>
