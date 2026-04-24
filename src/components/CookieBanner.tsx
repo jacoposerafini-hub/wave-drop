@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Cookie } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const COOKIE = 'wd_consent';
@@ -36,21 +37,21 @@ export default function CookieBanner() {
 
   return (
     <div className="cookie-banner" role="dialog" aria-label="Consenso cookie">
-      <div className="cookie-banner__inner">
-        <div className="cookie-banner__text">
-          <div className="eyebrow" style={{ marginBottom: 8 }}>
-            Cookie
-          </div>
-          <p>
-            Usiamo cookie tecnici necessari e, previo consenso, cookie
-            analitici anonimi per migliorare il sito. Nessun profilo
-            pubblicitario.{' '}
-            <Link href="/cookies" style={{ textDecoration: 'underline' }}>
-              Dettagli
-            </Link>
-            .
-          </p>
+      <div className="cookie-banner__icon" aria-hidden="true">
+        <Cookie size={22} />
+      </div>
+      <div className="cookie-banner__text">
+        <div className="eyebrow" style={{ marginBottom: 6 }}>
+          Cookie
         </div>
+        <p>
+          Usiamo cookie tecnici necessari e, con consenso, analitici anonimi.
+          Nessuna profilazione.{' '}
+          <Link href="/cookies" style={{ textDecoration: 'underline' }}>
+            Dettagli
+          </Link>
+          .
+        </p>
         <div className="cookie-banner__actions">
           <button
             type="button"

@@ -1009,31 +1009,37 @@ img, svg { display: block; max-width: 100%; }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .fade-in { animation: fade-in 300ms var(--ease); }
 
-/* Cookie banner */
+/* Cookie banner — compact card, left-bottom */
 .cookie-banner {
   position: fixed;
-  left: 16px; right: 16px; bottom: 16px;
+  left: 20px; bottom: 20px;
   z-index: 700;
-  background: var(--bg-2);
-  border: 1px solid var(--line-2);
+  width: min(420px, calc(100vw - 40px));
+  display: flex; gap: 14px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, #1a1522, #120d1a);
+  border: 1px solid oklch(0.6 0.18 320 / 0.35);
   border-radius: var(--r-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.7);
   animation: slide-up 320ms var(--ease);
 }
 @keyframes slide-up { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.cookie-banner__inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 24px; padding: 18px 22px;
-  flex-wrap: wrap;
+.cookie-banner__icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--r-pill);
+  background: oklch(0.6 0.18 320 / 0.18);
+  color: oklch(0.85 0.15 320);
 }
-.cookie-banner__text { flex: 1; min-width: 260px; }
+.cookie-banner__text { flex: 1; min-width: 0; }
 .cookie-banner__text p {
-  font-size: 13.5px; line-height: 1.55;
+  font-size: 13px; line-height: 1.55;
   color: var(--fg-dim);
-  max-width: 720px;
+  margin-bottom: 12px;
 }
-.cookie-banner__actions { display: flex; gap: 10px; flex-shrink: 0; }
-@media (max-width: 640px) {
-  .cookie-banner__actions { width: 100%; }
-  .cookie-banner__actions .btn { flex: 1; justify-content: center; }
+.cookie-banner__actions { display: flex; gap: 8px; }
+.cookie-banner__actions .btn { flex: 1; justify-content: center; }
+@media (max-width: 520px) {
+  .cookie-banner { left: 12px; right: 12px; bottom: 12px; width: auto; }
 }
