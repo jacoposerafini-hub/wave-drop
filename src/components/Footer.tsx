@@ -74,8 +74,8 @@ export default function Footer() {
                 <img
                   src="https://imgs.search.brave.com/nGzLTyq5MvBoNQMnGF2nJqnZxMvuOiop6Y8f7YpATrM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjMv/OTg2LzU2MS9zbWFs/bC90aWt0b2stbG9n/by10aWt0b2stbG9n/by10cmFuc3BhcmVu/dC10aWt0b2staWNv/bi10cmFuc3BhcmVu/dC1mcmVlLWZyZWUt/cG5nLnBuZw"
                   alt="TikTok"
-                  width={26}
-                  height={26}
+                  width={38}
+                  height={38}
                   style={{ objectFit: 'contain' }}
                 />
               </a>
