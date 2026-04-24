@@ -249,14 +249,28 @@ img, svg { display: block; max-width: 100%; }
 
 .hero__title {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(56px, 9vw, 128px);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
   text-transform: uppercase;
   padding-bottom: 0.08em;
+  background: linear-gradient(180deg, #ffffff 0%, #c7cad2 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.hero__title .italic { color: var(--accent); font-weight: 700; font-style: normal; }
+.hero__title .italic {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  background: linear-gradient(180deg, var(--accent) 0%, oklch(var(--accent-l) calc(var(--accent-c) * 0.7) calc(var(--accent-h) + 20)) 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .hero__title .outline {
   -webkit-text-stroke: 1.5px var(--fg);
   color: transparent;
@@ -327,6 +341,14 @@ img, svg { display: block; max-width: 100%; }
 .countdown__label {
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 20px;
+}
+.countdown__label .eyebrow {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 .countdown__grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
@@ -489,7 +511,13 @@ img, svg { display: block; max-width: 100%; }
   text-transform: uppercase;
   padding-bottom: 0.08em;
 }
-.section-head__l .italic { color: var(--accent); font-style: normal; }
+.section-head__l .italic {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+}
 .section-head__r {
   text-align: right;
   color: var(--fg-dim);
@@ -531,7 +559,13 @@ img, svg { display: block; max-width: 100%; }
   text-transform: uppercase;
   padding-bottom: 0.06em;
 }
-.footer__big .italic { color: var(--accent); font-style: normal; }
+.footer__big .italic {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+}
 .footer__col h5 {
   font-family: var(--font-mono); font-size: 10.5px;
   letter-spacing: 0.2em; text-transform: uppercase;
@@ -800,7 +834,13 @@ img, svg { display: block; max-width: 100%; }
   text-transform: uppercase;
   padding-bottom: 0.08em;
 }
-.about__headline .italic { color: var(--accent); font-style: normal; }
+.about__headline .italic {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+}
 .about__body p { color: var(--fg-dim); margin-bottom: 18px; max-width: 52ch; font-size: 15.5px; }
 .about__body p strong { color: var(--fg); font-weight: 500; }
 
@@ -864,7 +904,13 @@ img, svg { display: block; max-width: 100%; }
 /* Page lead */
 .page__lead { padding: 72px 0 40px; }
 .page__lead .display { font-size: clamp(56px, 10vw, 140px); }
-.page__lead .display .italic { font-style: italic; color: var(--accent); }
+.page__lead .display .italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  text-transform: none;
+}
 
 /* Toast */
 .toast {
@@ -891,7 +937,13 @@ img, svg { display: block; max-width: 100%; }
 .notfound { padding: 100px 0 80px; text-align: center; }
 .notfound__code { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-dim); text-transform: uppercase; }
 .notfound__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(64px, 12vw, 160px); line-height: 1.02; margin: 14px 0 22px; letter-spacing: -0.04em; text-transform: uppercase; padding-bottom: 0.08em;}
-.notfound__title .italic { color: var(--accent); font-style: normal; }
+.notfound__title .italic {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+}
 
 .stack { display: flex; flex-direction: column; gap: 12px; }
 .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }

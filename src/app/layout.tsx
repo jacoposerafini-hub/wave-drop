@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Manrope, JetBrains_Mono } from 'next/font/google';
+import { Manrope, JetBrains_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -17,6 +17,13 @@ const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-jetbrains',
+  display: 'swap',
+});
+const serif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
   display: 'swap',
 });
 
@@ -40,7 +47,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="it" className={`${manrope.variable} ${jetbrains.variable}`}>
+    <html
+      lang="it"
+      className={`${manrope.variable} ${jetbrains.variable} ${serif.variable}`}
+    >
       <body>
         <div className="wash" />
         <div className="grain" />
