@@ -177,7 +177,7 @@ function NoDropState() {
       <section className="hero">
         <div
           className="hero__grid"
-          style={{ gridTemplateColumns: '0.85fr 1.15fr' }}
+          style={{ gridTemplateColumns: '0.7fr 1.3fr' }}
         >
           <div>
             <div className="eyebrow">
@@ -200,7 +200,7 @@ function NoDropState() {
               <NewsletterForm />
             </div>
           </div>
-          <aside className="hero__aside" style={{ paddingLeft: 120 }}>
+          <aside className="hero__aside" style={{ paddingLeft: 60 }}>
             <div className="countdown-hero" style={{ minHeight: 520 }}>
               <div
                 className="countdown-hero__bg"
