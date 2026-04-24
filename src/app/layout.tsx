@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Marquee from '@/components/Marquee';
+import CartDrawer from '@/components/CartDrawer';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Marquee />
         {children}
         <Footer />
+        <CartDrawer />
       </body>
     </html>
   );

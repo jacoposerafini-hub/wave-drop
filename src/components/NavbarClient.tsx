@@ -40,10 +40,10 @@ export default function NavbarClient({ cartCount }: { cartCount: number }) {
         </nav>
         <div className="nav__right">
           <span className="chip live hide-sm">Drop 007 · Live</span>
-          <Link href="/cart" className="nav__cart" aria-label="Carrello">
+          <a href="#cart" className="nav__cart" aria-label="Carrello">
             <ShoppingBag size={18} />
             {cartCount > 0 && <span className="nav__cart-count">{cartCount}</span>}
-          </Link>
+          </a>
         </div>
       </div>
     </header>

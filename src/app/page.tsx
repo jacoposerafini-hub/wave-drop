@@ -175,7 +175,10 @@ function NoDropState() {
   return (
     <main className="page-enter container">
       <section className="hero">
-        <div className="hero__grid">
+        <div
+          className="hero__grid"
+          style={{ gridTemplateColumns: '0.85fr 1.15fr' }}
+        >
           <div>
             <div className="eyebrow">
               <span className="dot" />
@@ -197,7 +200,7 @@ function NoDropState() {
             </div>
           </div>
           <aside className="hero__aside">
-            <div className="countdown-hero" style={{ minHeight: 640 }}>
+            <div className="countdown-hero" style={{ minHeight: 520 }}>
               <div
                 className="countdown-hero__bg"
                 data-label="Teaser · Drop 001"
