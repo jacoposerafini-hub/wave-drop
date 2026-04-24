@@ -22,8 +22,8 @@
   --danger: oklch(0.72 0.16 22);
   --grain: 0.18;
 
-  --font-display: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  --font-body: "Inter", "Helvetica Neue", "Helvetica", system-ui, sans-serif;
+  --font-display: var(--font-manrope), "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --font-body: var(--font-manrope), "Helvetica Neue", "Helvetica", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --r-sm: 10px;
