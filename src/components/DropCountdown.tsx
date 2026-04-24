@@ -29,10 +29,7 @@ export default function DropCountdown({ target }: { target: string | Date }) {
   return (
     <div className="countdown">
       <div className="countdown__label">
-        <span className="eyebrow">
-          <span className="dot" />
-          Prossimo drop tra
-        </span>
+        <span className="eyebrow">Prossimo drop tra</span>
         <span className="chip live">Live</span>
       </div>
       <div className="countdown__grid">
