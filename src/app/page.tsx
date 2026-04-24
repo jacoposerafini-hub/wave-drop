@@ -181,9 +181,9 @@ function NoDropState() {
         <div
           className="hero__grid"
           style={{
-            gridTemplateColumns: 'minmax(320px, 0.4fr) 1.6fr',
+            gridTemplateColumns: 'minmax(440px, 0.55fr) 1.45fr',
             paddingLeft: 'var(--pad)',
-            gap: 0,
+            gap: 24,
           }}
         >
           <div>
@@ -191,9 +191,16 @@ function NoDropState() {
               <span className="dot" />
               Stay tuned · Drop 001
             </div>
-            <h1 className="hero__title" style={{ marginTop: 20 }}>
+            <h1
+              className="hero__title"
+              style={{
+                marginTop: 20,
+                fontSize: 'clamp(56px, 7vw, 104px)',
+                lineHeight: 1,
+              }}
+            >
               <span>Ready to</span>
-              <span style={{ display: 'inline-block', width: '0.6em' }} />
+              <span style={{ display: 'inline-block', width: '0.4em' }} />
               <span className="italic">drop.</span>
             </h1>
             <p className="hero__copy">
