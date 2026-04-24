@@ -171,9 +171,10 @@ export default async function HomePage() {
 }
 
 function NoDropState() {
+  const target = new Date('2026-05-17T22:22:00');
   return (
     <main className="page-enter container">
-      <div className="notfound">
+      <div className="notfound" style={{ paddingBottom: 40 }}>
         <div className="notfound__code">stay tuned</div>
         <h1 className="notfound__title">
           Ready to <span className="italic">drop.</span>
@@ -188,10 +189,24 @@ function NoDropState() {
           La notte sta per prendersi il suo spazio. Il Drop 001 è quasi fuori.
           Iscriviti e assicurati il tuo pezzo prima del sold out.
         </p>
-        <div className="eyebrow" style={{ marginBottom: 10, textAlign: 'center' }}>
-          Avvisami prima
+      </div>
+      <div
+        style={{
+          maxWidth: 520,
+          margin: '0 auto 48px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 22,
+        }}
+      >
+        <div className="countdown-hero">
+          <div className="countdown-hero__bg" />
+          <DropCountdown target={target} />
         </div>
-        <div style={{ maxWidth: 380, margin: '0 auto' }}>
+        <div>
+          <div className="eyebrow" style={{ marginBottom: 10, textAlign: 'center' }}>
+            Avvisami prima
+          </div>
           <NewsletterForm />
         </div>
       </div>
