@@ -6,7 +6,7 @@ import CartRow from './cart-row';
 
 export const dynamic = 'force-dynamic';
 
-const FREE_SHIPPING_THRESHOLD = 8000;
+const FREE_SHIPPING_THRESHOLD = 5000;
 
 export default async function CartPage() {
   const { items, subtotalCents } = await getCartWithDetails();
@@ -14,23 +14,36 @@ export default async function CartPage() {
   if (items.length === 0) {
     return (
       <main className="page-enter container">
-        <div className="notfound">
-          <div className="notfound__code">Carrello</div>
-          <h1 className="notfound__title">
-            Vuoto<span className="italic">.</span>
-          </h1>
-          <p
+        <div className="cart-shell">
+          <div className="cart-shell__head">
+            <div className="cart-shell__title">Carrello</div>
+          </div>
+          <div
+            className="cart-shell__body"
             style={{
-              color: 'var(--fg-dim)',
-              maxWidth: 420,
-              margin: '0 auto 28px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              padding: '60px 22px',
             }}
           >
-            Niente nel carrello. Torna al drop.
-          </p>
-          <Link href="/" className="btn primary">
-            Shop the drop <ArrowRight size={16} />
-          </Link>
+            <div className="eyebrow" style={{ marginBottom: 14 }}>Cart</div>
+            <h2 className="display" style={{ fontSize: 72 }}>Vuoto</h2>
+            <p
+              style={{
+                color: 'var(--fg-dim)',
+                margin: '16px 0 24px',
+                maxWidth: 280,
+              }}
+            >
+              Niente nel carrello. Torna al drop.
+            </p>
+            <Link href="/" className="btn primary">
+              Shop the drop <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </main>
     );
@@ -47,24 +60,15 @@ export default async function CartPage() {
 
   return (
     <main className="page-enter container">
-      <div className="section-head" style={{ paddingTop: 56 }}>
-        <div className="section-head__l">Carrello</div>
-        <div className="section-head__r">
-          Riservato per 10 minuti. Continua e completa l&apos;ordine prima che il
-          timer scada.
+      <div className="cart-shell">
+        <div className="cart-shell__head">
+          <div className="cart-shell__title">Carrello</div>
+          <Link href="/" className="cart-shell__close" aria-label="Chiudi">
+            ←
+          </Link>
         </div>
-      </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 0.8fr)',
-          gap: 40,
-          alignItems: 'start',
-        }}
-        className="cart-grid"
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div className="cart-shell__body">
           {items.map((item) => (
             <CartRow
               key={item.variantId}
@@ -81,21 +85,7 @@ export default async function CartPage() {
           ))}
         </div>
 
-        <aside
-          style={{
-            position: 'sticky',
-            top: 96,
-            border: '1px solid var(--line-2)',
-            borderRadius: 'var(--r-lg)',
-            padding: 24,
-            background:
-              'linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
-          }}
-        >
-          <div className="eyebrow" style={{ marginBottom: 18 }}>
-            Riepilogo
-          </div>
-
+        <div className="cart-shell__foot">
           <div className="drawer__row">
             <span>Subtotale</span>
             <span>{formatPrice(subtotalCents)}</span>
@@ -105,7 +95,7 @@ export default async function CartPage() {
             <span>
               {shipping === 0 ? (
                 <span style={{ color: 'var(--accent)' }}>
-                  Gratis · sopra €80
+                  Gratis · sopra €50
                 </span>
               ) : (
                 formatPrice(shipping)
@@ -137,6 +127,8 @@ export default async function CartPage() {
             </div>
           )}
 
+          <div className="divider-hash" style={{ margin: '14px 0' }} />
+
           <div className="drawer__total">
             <span className="k">Totale</span>
             <span className="v tnum">{formatPrice(total)}</span>
@@ -165,13 +157,7 @@ export default async function CartPage() {
           >
             Pagamento protetto · Stripe
           </p>
-        </aside>
-      </div>
-
-      <div style={{ marginTop: 32 }}>
-        <Link href="/" className="eyebrow">
-          ← Continua shopping
-        </Link>
+        </div>
       </div>
     </main>
   );

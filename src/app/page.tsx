@@ -68,11 +68,16 @@ export default async function HomePage() {
             </div>
           </div>
           <aside className="hero__aside">
-            {isUpcoming && drop.startsAt ? (
-              <DropCountdown target={drop.startsAt} />
-            ) : (
-              <DropCountdown target={drop.endsAt || new Date(Date.now() + 7 * 86400000)} />
-            )}
+            <div className="countdown-hero">
+              <div className="countdown-hero__bg" />
+              {isUpcoming && drop.startsAt ? (
+                <DropCountdown target={drop.startsAt} />
+              ) : (
+                <DropCountdown
+                  target={drop.endsAt || new Date(Date.now() + 7 * 86400000)}
+                />
+              )}
+            </div>
             <div>
               <div className="eyebrow" style={{ marginBottom: 10 }}>
                 Avviso 48h prima
@@ -171,7 +176,7 @@ function NoDropState() {
       <div className="notfound">
         <div className="notfound__code">stay tuned</div>
         <h1 className="notfound__title">
-          In <span className="italic">arrivo.</span>
+          Coming <span className="italic">soon.</span>
         </h1>
         <p
           style={{
