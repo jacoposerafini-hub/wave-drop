@@ -197,7 +197,7 @@ function NoDropState() {
             </div>
           </div>
           <aside className="hero__aside">
-            <div className="countdown-hero" style={{ minHeight: 460 }}>
+            <div className="countdown-hero" style={{ minHeight: 640 }}>
               <div
                 className="countdown-hero__bg"
                 data-label="Teaser · Drop 001"

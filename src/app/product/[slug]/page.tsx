@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MessageCircle } from 'lucide-react';
 import { db } from '@/lib/db';
 import { formatPrice } from '@/lib/utils';
 import AddToCartButton from '@/components/AddToCartButton';
@@ -194,20 +193,6 @@ export default async function ProductPage({
             </ul>
           </div>
 
-          <a
-            href="https://wa.me/393000000000"
-            target="_blank"
-            rel="noreferrer"
-            className="eyebrow"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              marginTop: 4,
-            }}
-          >
-            <MessageCircle size={14} /> Domande? Scrivici su WhatsApp
-          </a>
         </aside>
       </div>
     </main>

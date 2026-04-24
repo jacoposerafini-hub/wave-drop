@@ -1,4 +1,4 @@
-import { Instagram, MessageCircle, Mail } from 'lucide-react';
+import { Instagram, Mail } from 'lucide-react';
 
 export const metadata = { title: 'Contatti' };
 
@@ -8,16 +8,8 @@ const CARDS: Array<{
   v: string;
   h: string;
   href?: string;
-  icon: 'whats' | 'insta' | 'mail';
+  icon: 'insta' | 'mail';
 }> = [
-  {
-    k: 'WhatsApp',
-    t: 'Fast line',
-    v: 'La via più veloce. Ti rispondiamo in giornata.',
-    h: '+39 058 ··· ···',
-    href: 'https://wa.me/393000000000',
-    icon: 'whats',
-  },
   {
     k: 'Instagram',
     t: 'Slide in our DMs',
@@ -36,8 +28,7 @@ const CARDS: Array<{
   },
 ];
 
-function CardIcon({ icon }: { icon: 'whats' | 'insta' | 'mail' }) {
-  if (icon === 'whats') return <MessageCircle size={24} />;
+function CardIcon({ icon }: { icon: 'insta' | 'mail' }) {
   if (icon === 'insta') return <Instagram size={24} />;
   return <Mail size={24} />;
 }

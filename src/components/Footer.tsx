@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageCircle } from 'lucide-react';
 import NewsletterForm from './NewsletterForm';
 
 export default function Footer() {
@@ -79,14 +78,6 @@ export default function Footer() {
                   height={26}
                   style={{ objectFit: 'contain' }}
                 />
-              </a>
-              <a
-                href="https://wa.me/393000000000"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle size={26} />
               </a>
             </div>
           </div>
