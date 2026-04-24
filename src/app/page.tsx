@@ -202,11 +202,11 @@ function NoDropState() {
           </div>
           <aside
             className="hero__aside"
-            style={{ paddingLeft: 0 }}
+            style={{ paddingLeft: 0, marginRight: 'calc(50% - 50vw)' }}
           >
             <div
               className="countdown-hero"
-              style={{ minHeight: 540 }}
+              style={{ minHeight: 540, borderRadius: 0 }}
             >
               <div
                 className="countdown-hero__bg"
