@@ -173,11 +173,18 @@ export default async function HomePage() {
 function NoDropState() {
   const target = new Date('2026-05-17T22:22:00');
   return (
-    <main className="page-enter container">
-      <section className="hero">
+    <main className="page-enter">
+      <section
+        className="hero"
+        style={{ overflow: 'visible', paddingRight: 0, paddingLeft: 0 }}
+      >
         <div
           className="hero__grid"
-          style={{ gridTemplateColumns: '0.25fr 1.75fr' }}
+          style={{
+            gridTemplateColumns: 'minmax(320px, 0.4fr) 1.6fr',
+            paddingLeft: 'var(--pad)',
+            gap: 0,
+          }}
         >
           <div>
             <div className="eyebrow">
@@ -202,7 +209,7 @@ function NoDropState() {
           </div>
           <aside
             className="hero__aside"
-            style={{ paddingLeft: 0, marginRight: 'calc(50% - 50vw)' }}
+            style={{ paddingLeft: 0 }}
           >
             <div
               className="countdown-hero"
