@@ -35,15 +35,15 @@ export default function Footer() {
             <h5>Shop</h5>
             <Link href="/">Drop corrente</Link>
             <Link href="/archive">Archivio</Link>
-            <a>Gift card</a>
+            <Link href="/gift-card">Gift card</Link>
           </div>
 
           <div className="footer__col">
             <h5>Info</h5>
             <Link href="/about">About</Link>
             <Link href="/contact">Contatti</Link>
-            <a>Spedizioni</a>
-            <a>Resi</a>
+            <Link href="/shipping">Spedizioni</Link>
+            <Link href="/returns">Resi</Link>
           </div>
 
           <div className="footer__col">
@@ -86,9 +86,8 @@ export default function Footer() {
         <div className="footer__bottom">
           <span>© 2026 Wave Staff · Lucca, IT · P.IVA 00000000000</span>
           <span>
-            <a>Privacy</a>
-            <a>Termini</a>
-            <Link href="/_not-a-page">404</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Termini</Link>
           </span>
         </div>
       </div>

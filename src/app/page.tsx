@@ -199,7 +199,7 @@ function NoDropState() {
               <NewsletterForm />
             </div>
           </div>
-          <aside className="hero__aside">
+          <aside className="hero__aside" style={{ paddingLeft: 48 }}>
             <div className="countdown-hero" style={{ minHeight: 520 }}>
               <div
                 className="countdown-hero__bg"
