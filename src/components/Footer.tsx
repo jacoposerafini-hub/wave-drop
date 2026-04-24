@@ -11,20 +11,21 @@ export default function Footer() {
         <div className="footer__grid">
           <div>
             <div className="footer__big">
-              Rimani
+              Entra
               <br />
-              <span className="italic">nel loop.</span>
+              <span className="italic">nel club.</span>
             </div>
             <p
               style={{
                 color: 'var(--fg-dim)',
-                maxWidth: 360,
+                maxWidth: 380,
                 marginTop: 20,
                 marginBottom: 22,
               }}
             >
-              Iscriviti per sapere quando esce il prossimo drop. Niente spam, solo i
-              drop. Ti avvisiamo 48h prima.
+              I drop vanno sold out in fretta. Niente spam, solo release
+              esclusive. Ti avvisiamo 48h prima di tutti gli altri. Non restare
+              fuori.
             </p>
             <div style={{ maxWidth: 380 }}>
               <NewsletterForm />

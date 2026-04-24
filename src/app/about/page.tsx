@@ -8,8 +8,8 @@ const STATS = [
 ];
 
 const BODY = [
-  'Wave Staff nasce a Lucca come collettivo di persone che credono nella qualità della notte. Oggi siamo il ponte tra chi esce e i locali che meritano: costruiamo serate, selezioniamo i posti, portiamo la gente giusta dove sta succedendo qualcosa di vero.',
-  'Wave Drop è la nostra label. Produzione italiana, quantità limitate, nessun magazzino. Ogni capo nasce dalla stessa idea: vestire chi vive davvero questa città dopo il tramonto.',
+  'Nati a Lucca, cresciuti nei club. Wave non è solo uno staff, è la community di chi vive la notte senza filtri. Creiamo le vibes, selezioniamo i locali e portiamo la gente giusta dove la musica picchia forte e succede qualcosa di vero.',
+  'Wave Drop è la nostra divisa ufficiale. Streetwear italiano, tirature limitatissime, zero magazzino. Ogni pezzo è pensato per chi fa serata fino all\u2019alba e vuole distinguersi. Niente compromessi, solo roba esclusiva per chi vive la città dopo il tramonto.',
 ];
 
 export default function AboutPage() {
@@ -21,7 +21,7 @@ export default function AboutPage() {
             Chi siamo
           </div>
           <h1 className="about__headline">
-            Siamo
+            We are
             <br />
             <span className="italic">Wave.</span>
           </h1>
@@ -34,7 +34,7 @@ export default function AboutPage() {
               marginBottom: 28,
             }}
           >
-            <strong>Un collettivo tra la città e la notte.</strong>
+            <strong>La notte è la nostra comfort zone.</strong>
           </p>
           {BODY.map((x, i) => (
             <p key={i}>{x}</p>

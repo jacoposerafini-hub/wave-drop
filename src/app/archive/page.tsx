@@ -38,7 +38,9 @@ export default async function ArchivePage() {
         <div className="eyebrow" style={{ marginBottom: 20 }}>
           Archivio
         </div>
-        <h1 className="display">Drop Passati</h1>
+        <h1 className="display">
+          Sold out <span className="italic">club.</span>
+        </h1>
         <p
           style={{
             color: 'var(--fg-dim)',
@@ -46,7 +48,8 @@ export default async function ArchivePage() {
             maxWidth: 520,
           }}
         >
-          Quello che è stato. I pezzi sotto non tornano più.
+          La regola è una: niente restock. Quello che droppiamo, sparisce. Se
+          hai dormito, è andata.
         </p>
       </div>
       {drops.length === 0 ? (
@@ -60,10 +63,11 @@ export default async function ArchivePage() {
           }}
         >
           <div className="display" style={{ fontSize: 56, color: 'var(--fg-mute)' }}>
-            VUOTO
+            GRAVEYARD VUOTO
           </div>
-          <p style={{ color: 'var(--fg-dim)', marginTop: 12, fontSize: 14 }}>
-            Nessun drop archiviato ancora. Il primo deve ancora finire.
+          <p style={{ color: 'var(--fg-dim)', marginTop: 12, fontSize: 14, maxWidth: 420, marginLeft: 'auto', marginRight: 'auto' }}>
+            Nessun drop archiviato. Il Drop 001 è ancora vivo. Fatti trovare
+            pronto.
           </p>
         </div>
       ) : (

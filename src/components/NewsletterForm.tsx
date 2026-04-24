@@ -38,7 +38,7 @@ export default function NewsletterForm({ dropId }: { dropId?: string }) {
           disabled={pending}
         />
         <button type="submit" disabled={pending}>
-          {pending ? '...' : 'Entra'}
+          {pending ? '...' : 'Sblocca accesso'}
         </button>
       </form>
       {error && (

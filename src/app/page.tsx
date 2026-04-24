@@ -176,18 +176,21 @@ function NoDropState() {
       <div className="notfound">
         <div className="notfound__code">stay tuned</div>
         <h1 className="notfound__title">
-          Coming <span className="italic">soon.</span>
+          Ready to <span className="italic">drop.</span>
         </h1>
         <p
           style={{
             color: 'var(--fg-dim)',
-            maxWidth: 420,
+            maxWidth: 460,
             margin: '0 auto 28px',
           }}
         >
-          Il primo drop sta prendendo forma. Iscriviti per essere il primo a
-          saperlo.
+          La notte sta per prendersi il suo spazio. Il Drop 001 è quasi fuori.
+          Iscriviti e assicurati il tuo pezzo prima del sold out.
         </p>
+        <div className="eyebrow" style={{ marginBottom: 10, textAlign: 'center' }}>
+          Avvisami prima
+        </div>
         <div style={{ maxWidth: 380, margin: '0 auto' }}>
           <NewsletterForm />
         </div>

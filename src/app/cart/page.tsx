@@ -30,18 +30,20 @@ export default async function CartPage() {
             }}
           >
             <div className="eyebrow" style={{ marginBottom: 14 }}>Cart</div>
-            <h2 className="display" style={{ fontSize: 72 }}>Vuoto</h2>
+            <h2 className="display" style={{ fontSize: 64 }}>
+              Carrello <span className="italic">vuoto.</span>
+            </h2>
             <p
               style={{
                 color: 'var(--fg-dim)',
                 margin: '16px 0 24px',
-                maxWidth: 280,
+                maxWidth: 320,
               }}
             >
-              Niente nel carrello. Torna al drop.
+              Stai dormendo? I pezzi volano e non tornano più.
             </p>
             <Link href="/" className="btn primary">
-              Shop the drop <ArrowRight size={16} />
+              Vai al drop <ArrowRight size={16} />
             </Link>
           </div>
         </div>

@@ -12,24 +12,24 @@ const CARDS: Array<{
 }> = [
   {
     k: 'WhatsApp',
-    t: 'La via più diretta',
-    v: 'Risposta in giornata',
+    t: 'Fast line',
+    v: 'La via più veloce. Ti rispondiamo in giornata.',
     h: '+39 058 ··· ···',
     href: 'https://wa.me/393000000000',
     icon: 'whats',
   },
   {
     k: 'Instagram',
-    t: 'DM sempre aperti',
-    v: 'Dietro le quinte di ogni drop',
+    t: 'Slide in our DMs',
+    v: 'Spoiler, backstage e vita notturna. DM sempre aperti.',
     h: '@wavestaff',
     href: 'https://instagram.com/wavestaff',
     icon: 'insta',
   },
   {
     k: 'Email',
-    t: 'Scrivici',
-    v: 'Per tutto il resto',
+    t: 'Per la roba seria',
+    v: 'Scrivici qui per collaborazioni, stampa o info ordini.',
     h: 'ciao@wavestaff.it',
     href: 'mailto:ciao@wavestaff.it',
     icon: 'mail',
@@ -50,12 +50,13 @@ export default function ContactPage() {
           Contatti
         </div>
         <h1 className="display" style={{ fontSize: 'clamp(84px, 15vw, 220px)' }}>
-          Parliamo.
+          Drop a line.
         </h1>
         <p
-          style={{ color: 'var(--fg-dim)', marginTop: 20, maxWidth: 480 }}
+          style={{ color: 'var(--fg-dim)', marginTop: 20, maxWidth: 500 }}
         >
-          Collaborazioni, stampa, o semplicemente un saluto.
+          Vuoi collaborare, hai un&apos;idea o vuoi solo farci sapere che ci
+          sei? Fatti sentire.
         </p>
       </div>
       <div className="contact-grid">
