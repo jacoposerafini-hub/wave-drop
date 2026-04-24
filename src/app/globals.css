@@ -531,13 +531,14 @@ img, svg { display: block; max-width: 100%; }
 .footer__col a:hover { color: var(--accent); }
 .footer__socials { display: flex; gap: 10px; }
 .footer__socials a {
-  width: 42px; height: 42px;
+  width: 52px; height: 52px;
   display: inline-flex; align-items: center; justify-content: center;
   border: 1px solid var(--line-2);
   border-radius: var(--r-pill);
   transition: all 220ms var(--ease);
 }
 .footer__socials a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.footer__socials img { filter: brightness(0) invert(1); }
 .footer__bottom {
   margin-top: 56px; padding-top: 22px;
   border-top: 1px solid var(--line);

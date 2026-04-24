@@ -58,10 +58,10 @@ export default function Footer() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://imgs.search.brave.com/vVkb-hfE_nkyZKfBCWkHD7Ww-qhukjlueR69m5r8PkQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZnJlZXBuZ2xvZ29z/LmNvbS91cGxvYWRz/L2xvZ28taWctcG5n/L2xvZ28taWctc3R1/bm5pbmctaW5zdGFn/cmFtLWxvZ28tdmVj/dG9yLWRvd25sb2Fk/LWZvci1uZXctNy5w/bmc"
+                  src="https://imgs.search.brave.com/4QcGZpzmZob664SiqtBms2Azjb1cboTcbHZ4YWPRt0o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZnJlZXBuZ2xvZ29z/LmNvbS91cGxvYWRz/L2xvZ28taWctcG5n/L2xvZ28taWctaW5z/dGFncmFtLW5ldy1s/b2dvLXZlY3Rvci1k/b3dubG9hZC0xMy5w/bmc"
                   alt="Instagram"
-                  width={18}
-                  height={18}
+                  width={26}
+                  height={26}
                   style={{ objectFit: 'contain' }}
                 />
               </a>
@@ -75,8 +75,8 @@ export default function Footer() {
                 <img
                   src="https://imgs.search.brave.com/nGzLTyq5MvBoNQMnGF2nJqnZxMvuOiop6Y8f7YpATrM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjMv/OTg2LzU2MS9zbWFs/bC90aWt0b2stbG9n/by10aWt0b2stbG9n/by10cmFuc3BhcmVu/dC10aWt0b2staWNv/bi10cmFuc3BhcmVu/dC1mcmVlLWZyZWUt/cG5nLnBuZw"
                   alt="TikTok"
-                  width={18}
-                  height={18}
+                  width={26}
+                  height={26}
                   style={{ objectFit: 'contain' }}
                 />
               </a>
@@ -86,7 +86,7 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label="WhatsApp"
               >
-                <MessageCircle size={18} />
+                <MessageCircle size={26} />
               </a>
             </div>
           </div>
