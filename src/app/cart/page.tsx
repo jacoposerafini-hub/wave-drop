@@ -13,13 +13,17 @@ export default async function CartPage() {
 
   if (items.length === 0) {
     return (
-      <main className="page-enter container">
-        <div className="cart-shell">
-          <div className="cart-shell__head">
-            <div className="cart-shell__title">Carrello</div>
+      <main className="page-enter">
+        <Link href="/" className="drawer-backdrop" aria-label="Chiudi" />
+        <aside className="drawer">
+          <div className="drawer__head">
+            <div className="drawer__title">Carrello</div>
+            <Link href="/" className="drawer__close" aria-label="Chiudi">
+              ✕
+            </Link>
           </div>
           <div
-            className="cart-shell__body"
+            className="drawer__body"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -27,10 +31,11 @@ export default async function CartPage() {
               justifyContent: 'center',
               textAlign: 'center',
               padding: '60px 22px',
+              flex: 1,
             }}
           >
             <div className="eyebrow" style={{ marginBottom: 14 }}>Cart</div>
-            <h2 className="display" style={{ fontSize: 64 }}>
+            <h2 className="display" style={{ fontSize: 56 }}>
               Carrello <span className="italic">vuoto.</span>
             </h2>
             <p
@@ -46,7 +51,7 @@ export default async function CartPage() {
               Vai al drop <ArrowRight size={16} />
             </Link>
           </div>
-        </div>
+        </aside>
       </main>
     );
   }
@@ -61,16 +66,17 @@ export default async function CartPage() {
   const missing = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotalCents);
 
   return (
-    <main className="page-enter container">
-      <div className="cart-shell">
-        <div className="cart-shell__head">
-          <div className="cart-shell__title">Carrello</div>
-          <Link href="/" className="cart-shell__close" aria-label="Chiudi">
-            ←
+    <main className="page-enter">
+      <Link href="/" className="drawer-backdrop" aria-label="Chiudi" />
+      <aside className="drawer">
+        <div className="drawer__head">
+          <div className="drawer__title">Carrello</div>
+          <Link href="/" className="drawer__close" aria-label="Chiudi">
+            ✕
           </Link>
         </div>
 
-        <div className="cart-shell__body">
+        <div className="drawer__body">
           {items.map((item) => (
             <CartRow
               key={item.variantId}
@@ -87,7 +93,7 @@ export default async function CartPage() {
           ))}
         </div>
 
-        <div className="cart-shell__foot">
+        <div className="drawer__foot">
           <div className="drawer__row">
             <span>Subtotale</span>
             <span>{formatPrice(subtotalCents)}</span>
@@ -160,7 +166,7 @@ export default async function CartPage() {
             Pagamento protetto · Stripe
           </p>
         </div>
-      </div>
+      </aside>
     </main>
   );
 }

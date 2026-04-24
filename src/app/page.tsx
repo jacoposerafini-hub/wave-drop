@@ -174,42 +174,44 @@ function NoDropState() {
   const target = new Date('2026-05-17T22:22:00');
   return (
     <main className="page-enter container">
-      <div className="notfound" style={{ paddingBottom: 40 }}>
-        <div className="notfound__code">stay tuned</div>
-        <h1 className="notfound__title">
-          Ready to <span className="italic">drop.</span>
-        </h1>
-        <p
-          style={{
-            color: 'var(--fg-dim)',
-            maxWidth: 460,
-            margin: '0 auto 28px',
-          }}
-        >
-          La notte sta per prendersi il suo spazio. Il Drop 001 è quasi fuori.
-          Iscriviti e assicurati il tuo pezzo prima del sold out.
-        </p>
-      </div>
-      <div
-        style={{
-          maxWidth: 520,
-          margin: '0 auto 48px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 22,
-        }}
-      >
-        <div className="countdown-hero">
-          <div className="countdown-hero__bg" />
-          <DropCountdown target={target} />
-        </div>
-        <div>
-          <div className="eyebrow" style={{ marginBottom: 10, textAlign: 'center' }}>
-            Avvisami prima
+      <section className="hero">
+        <div className="hero__grid">
+          <div>
+            <div className="eyebrow">
+              <span className="dot" />
+              Stay tuned · Drop 001
+            </div>
+            <h1 className="hero__title" style={{ marginTop: 20 }}>
+              <span>Ready to</span>{' '}
+              <span className="italic">drop.</span>
+            </h1>
+            <p className="hero__copy">
+              La notte sta per prendersi il suo spazio. Il Drop 001 è quasi
+              fuori. Iscriviti e assicurati il tuo pezzo prima del sold out.
+            </p>
+            <div style={{ marginTop: 28 }}>
+              <div className="eyebrow" style={{ marginBottom: 10 }}>
+                Avvisami prima
+              </div>
+              <NewsletterForm />
+            </div>
           </div>
-          <NewsletterForm />
+          <aside
+            className="hero__aside"
+            style={{ display: 'flex', flexDirection: 'column', gap: 18 }}
+          >
+            <div className="countdown-hero">
+              <div className="countdown-hero__bg" />
+              <DropCountdown target={target} />
+            </div>
+            <div
+              className="media tall"
+              data-label="Teaser · Drop 001"
+              style={{ minHeight: 260 }}
+            />
+          </aside>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
