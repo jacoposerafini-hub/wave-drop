@@ -157,10 +157,10 @@ img, svg { display: block; max-width: 100%; }
   padding: 14px 20px;
   font-family: var(--font-body);
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--fg-dim);
+  color: var(--fg);
   text-align: center;
 }
 .ship-banner__dot {
@@ -171,7 +171,7 @@ img, svg { display: block; max-width: 100%; }
   animation: pulse 1.8s infinite;
 }
 .ship-banner__sep { color: var(--accent); font-size: 10px; }
-.ship-banner__text { line-height: 1.4; }
+.ship-banner__text { line-height: 1.4; font-weight: 800; }
 
 /* Nav */
 .nav {

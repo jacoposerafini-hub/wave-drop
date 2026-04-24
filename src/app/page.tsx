@@ -196,19 +196,14 @@ function NoDropState() {
               <NewsletterForm />
             </div>
           </div>
-          <aside
-            className="hero__aside"
-            style={{ display: 'flex', flexDirection: 'column', gap: 18 }}
-          >
-            <div className="countdown-hero">
-              <div className="countdown-hero__bg" />
+          <aside className="hero__aside">
+            <div className="countdown-hero" style={{ minHeight: 460 }}>
+              <div
+                className="countdown-hero__bg"
+                data-label="Teaser · Drop 001"
+              />
               <DropCountdown target={target} />
             </div>
-            <div
-              className="media tall"
-              data-label="Teaser · Drop 001"
-              style={{ minHeight: 260 }}
-            />
           </aside>
         </div>
       </section>
