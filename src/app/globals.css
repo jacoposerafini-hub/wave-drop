@@ -1009,28 +1009,30 @@ img, svg { display: block; max-width: 100%; }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .fade-in { animation: fade-in 300ms var(--ease); }
 
-/* Cookie banner — compact card, left-bottom */
+/* Cookie banner — compact card, centered bottom */
 .cookie-banner {
   position: fixed;
-  left: 20px; bottom: 20px;
+  left: 50%; bottom: 24px;
+  transform: translateX(-50%);
   z-index: 700;
-  width: min(420px, calc(100vw - 40px));
+  width: min(460px, calc(100vw - 32px));
   display: flex; gap: 14px;
   padding: 18px 20px;
-  background: linear-gradient(180deg, #1a1522, #120d1a);
-  border: 1px solid oklch(0.6 0.18 320 / 0.35);
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
   border-radius: var(--r-lg);
-  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.7);
+  box-shadow: 0 24px 60px -18px rgba(0,0,0,0.75);
   animation: slide-up 320ms var(--ease);
 }
-@keyframes slide-up { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes slide-up { from { transform: translate(-50%, 24px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
 .cookie-banner__icon {
   flex-shrink: 0;
   width: 40px; height: 40px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: var(--r-pill);
-  background: oklch(0.6 0.18 320 / 0.18);
-  color: oklch(0.85 0.15 320);
+  background: oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.14);
+  color: var(--accent);
+  border: 1px solid oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.25);
 }
 .cookie-banner__text { flex: 1; min-width: 0; }
 .cookie-banner__text p {

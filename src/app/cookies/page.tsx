@@ -50,8 +50,9 @@ export default function CookiesPage() {
         </h1>
         <p style={{ color: 'var(--fg-dim)', marginTop: 20, maxWidth: 520 }}>
           Come usiamo i cookie e come puoi gestire il tuo consenso. Conforme
-          al GDPR (Reg. UE 2016/679) e alle linee guida del Garante Privacy
-          (giugno 2021).
+          al GDPR (Reg. UE 2016/679), Direttiva ePrivacy 2002/58/CE e alle
+          linee guida del Garante Privacy (10 giugno 2021, rev. 2024).
+          Ultimo aggiornamento: aprile 2026.
         </p>
       </div>
 
