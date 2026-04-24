@@ -2,55 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Wave Drop — refined, softer design language */
+/* Wave Drop — Apple-style design language */
 :root {
-  --bg: #0a0c12;
-  --bg-2: #10131c;
-  --bg-3: #161a25;
-  --fg: #f4f5f7;
-  --fg-dim: #a4abb8;
-  --fg-mute: #6b7180;
-  --line: rgba(255,255,255,0.07);
-  --line-2: rgba(255,255,255,0.13);
-  --line-3: rgba(255,255,255,0.22);
-  --accent-h: 195;
-  --accent-c: 0.15;
-  --accent-l: 0.78;
+  --bg: #000000;
+  --bg-2: #0e0e10;
+  --bg-3: #161618;
+  --fg: #f5f5f7;
+  --fg-dim: #a1a1a6;
+  --fg-mute: #6e6e73;
+  --line: rgba(255,255,255,0.06);
+  --line-2: rgba(255,255,255,0.12);
+  --line-3: rgba(255,255,255,0.20);
+  --accent-h: 210;
+  --accent-c: 0.16;
+  --accent-l: 0.72;
   --accent: oklch(var(--accent-l) var(--accent-c) var(--accent-h));
   --accent-soft: oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.14);
-  --accent-ink: #05090c;
+  --accent-ink: #ffffff;
   --danger: oklch(0.72 0.16 22);
-  --grain: 0.18;
+  --grain: 0.06;
 
-  --font-display: var(--font-manrope), "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  --font-body: var(--font-manrope), "Helvetica Neue", "Helvetica", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", var(--font-manrope), "Helvetica Neue", sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-manrope), "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
 
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 22px;
-  --r-xl: 32px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 28px;
+  --r-xl: 40px;
   --r-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.2);
-  --shadow-md: 0 8px 30px rgba(0,0,0,0.35);
-  --shadow-lg: 0 24px 60px rgba(0,0,0,0.45);
+  --shadow-sm: 0 1px 1px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.18);
+  --shadow-md: 0 6px 22px rgba(0,0,0,0.32);
+  --shadow-lg: 0 30px 80px rgba(0,0,0,0.5);
 
-  --max: 1280px;
+  --max: 1200px;
   --pad: clamp(20px, 4vw, 56px);
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: var(--bg); color: var(--fg); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+html, body { background: var(--bg); color: var(--fg); font-family: var(--font-body); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  font-size: 15.5px;
-  line-height: 1.6;
-  letter-spacing: -0.005em;
-  font-feature-settings: "ss01", "cv11";
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  font-feature-settings: "ss01", "cv11", "ss02";
+  text-rendering: optimizeLegibility;
 }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
@@ -124,26 +125,34 @@ img, svg { display: block; max-width: 100%; }
 
 /* Buttons — rounded, soft interactions */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 14px 24px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 22px;
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
-  letter-spacing: -0.005em;
-  border: 1px solid var(--line-2);
-  background: transparent;
+  letter-spacing: -0.01em;
+  border: none;
+  background: rgba(255,255,255,0.08);
   color: var(--fg);
   border-radius: var(--r-pill);
-  transition: all 260ms var(--ease);
+  backdrop-filter: blur(20px) saturate(180%);
+  transition: all 220ms var(--ease);
 }
-.btn:hover { border-color: var(--line-3); background: rgba(255,255,255,0.03); transform: translateY(-1px); }
+.btn:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
 .btn.primary {
-  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
-  box-shadow: 0 8px 24px oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.3);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  box-shadow: 0 4px 14px oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.35);
 }
-.btn.primary:hover { filter: brightness(1.04); transform: translateY(-1px); box-shadow: 0 12px 32px oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.4); }
-.btn.ghost { border-color: var(--line-2); }
-.btn.sm { padding: 10px 18px; font-size: 13px; }
+.btn.primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--line-2);
+}
+.btn.ghost:hover { background: rgba(255,255,255,0.05); border-color: var(--line-3); }
+.btn.sm { padding: 9px 16px; font-size: 13px; }
 
 /* Shipping banner — static */
 .ship-banner {
@@ -176,8 +185,9 @@ img, svg { display: block; max-width: 100%; }
 /* Nav */
 .nav {
   position: sticky; top: 0; z-index: 100;
-  backdrop-filter: saturate(140%) blur(14px);
-  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  background: color-mix(in oklab, var(--bg) 60%, transparent);
   border-bottom: 1px solid var(--line);
 }
 .nav__inner {
@@ -249,13 +259,12 @@ img, svg { display: block; max-width: 100%; }
 
 .hero__title {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(56px, 9vw, 128px);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.05em;
   padding-bottom: 0.08em;
-  background: linear-gradient(180deg, #ffffff 0%, #c7cad2 110%);
+  background: linear-gradient(180deg, #ffffff 0%, #b8b8be 110%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -876,14 +885,16 @@ img, svg { display: block; max-width: 100%; }
 .contact-card {
   padding: 32px;
   border: 1px solid var(--line);
-  background: var(--bg-2);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-radius: var(--r-lg);
   transition: all 320ms var(--ease);
   position: relative;
   overflow: hidden;
   display: block;
 }
-.contact-card:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.contact-card:hover { border-color: var(--line-2); transform: translateY(-4px); box-shadow: var(--shadow-md); }
 .contact-card__icon {
   width: 48px; height: 48px;
   background: transparent;
@@ -891,8 +902,8 @@ img, svg { display: block; max-width: 100%; }
   margin-bottom: 20px;
 }
 .contact-card h4 {
-  font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;
-  margin-bottom: 8px; text-transform: uppercase;
+  font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: -0.02em;
+  margin-bottom: 8px;
 }
 .contact-card p { color: var(--fg-dim); font-size: 14px; }
 .contact-card__handle {
