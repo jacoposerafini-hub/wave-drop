@@ -181,7 +181,7 @@ function NoDropState() {
         <div
           className="hero__grid"
           style={{
-            gridTemplateColumns: 'minmax(440px, 0.55fr) 1.45fr',
+            gridTemplateColumns: 'minmax(440px, 0.8fr) 1.2fr',
             paddingLeft: 'var(--pad)',
             gap: 24,
           }}
