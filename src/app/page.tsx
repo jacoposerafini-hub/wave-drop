@@ -184,15 +184,9 @@ function NoDropState() {
               <span className="dot" />
               Stay tuned · Drop 001
             </div>
-            <h1
-              className="hero__title"
-              style={{
-                marginTop: 20,
-                whiteSpace: 'nowrap',
-                fontSize: 'clamp(44px, 7vw, 104px)',
-              }}
-            >
-              <span>Ready to</span>{' '}
+            <h1 className="hero__title" style={{ marginTop: 20 }}>
+              <span>Ready to</span>
+              <span style={{ display: 'inline-block', width: '0.6em' }} />
               <span className="italic">drop.</span>
             </h1>
             <p className="hero__copy">
