@@ -845,10 +845,8 @@ img, svg { display: block; max-width: 100%; }
 .contact-card:hover { border-color: var(--line-2); transform: translateY(-3px); box-shadow: var(--shadow-md); }
 .contact-card__icon {
   width: 48px; height: 48px;
-  border-radius: var(--r-pill);
-  background: var(--accent-soft);
-  color: var(--accent);
-  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent;
+  display: inline-flex; align-items: center; justify-content: flex-start;
   margin-bottom: 20px;
 }
 .contact-card h4 {
