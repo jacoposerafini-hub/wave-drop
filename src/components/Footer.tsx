@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Instagram, Music2, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import NewsletterForm from './NewsletterForm';
 
 export default function Footer() {
@@ -56,7 +56,14 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label="Instagram"
               >
-                <Instagram size={18} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://imgs.search.brave.com/vVkb-hfE_nkyZKfBCWkHD7Ww-qhukjlueR69m5r8PkQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZnJlZXBuZ2xvZ29z/LmNvbS91cGxvYWRz/L2xvZ28taWctcG5n/L2xvZ28taWctc3R1/bm5pbmctaW5zdGFn/cmFtLWxvZ28tdmVj/dG9yLWRvd25sb2Fk/LWZvci1uZXctNy5w/bmc"
+                  alt="Instagram"
+                  width={18}
+                  height={18}
+                  style={{ objectFit: 'contain' }}
+                />
               </a>
               <a
                 href="https://tiktok.com/@wavestaff"
@@ -64,7 +71,14 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label="TikTok"
               >
-                <Music2 size={18} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://imgs.search.brave.com/nGzLTyq5MvBoNQMnGF2nJqnZxMvuOiop6Y8f7YpATrM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjMv/OTg2LzU2MS9zbWFs/bC90aWt0b2stbG9n/by10aWt0b2stbG9n/by10cmFuc3BhcmVu/dC10aWt0b2staWNv/bi10cmFuc3BhcmVu/dC1mcmVlLWZyZWUt/cG5nLnBuZw"
+                  alt="TikTok"
+                  width={18}
+                  height={18}
+                  style={{ objectFit: 'contain' }}
+                />
               </a>
               <a
                 href="https://wa.me/393000000000"

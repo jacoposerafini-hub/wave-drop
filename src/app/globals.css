@@ -274,6 +274,9 @@ img, svg { display: block; max-width: 100%; }
   border-radius: var(--r-lg);
   overflow: hidden;
   isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .countdown-hero__bg {
   position: absolute; inset: 0;
@@ -300,6 +303,8 @@ img, svg { display: block; max-width: 100%; }
 .countdown-hero .countdown {
   position: relative;
   z-index: 1;
+  width: 100%;
+  margin: 22px;
   background: linear-gradient(180deg, rgba(10,12,18,0.72), rgba(10,12,18,0.55));
   border-color: var(--line-2);
   backdrop-filter: blur(16px);
