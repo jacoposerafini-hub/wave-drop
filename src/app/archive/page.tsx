@@ -4,6 +4,16 @@ import { db } from '@/lib/db';
 
 export const revalidate = 300;
 
+export const metadata = {
+  title: 'Archivio drop · graveyard',
+  description:
+    'Tutti i drop Wave Drop passati. Pezzi sold out, edizioni numerate, niente restock. La storia della label streetwear di Lucca.',
+  openGraph: {
+    title: 'Archivio Wave Drop',
+    description: 'Tutti i drop passati. Niente restock, niente ristampe.',
+  },
+};
+
 const MONTHS_IT = [
   'Gen',
   'Feb',
