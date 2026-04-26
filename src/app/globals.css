@@ -1204,14 +1204,13 @@ img, svg { display: block; max-width: 100%; }
 
 .nav__mobile {
   position: fixed;
-  top: 72px; left: 0; right: 0; bottom: 0;
+  top: 64px; left: 0; right: 0; bottom: 0;
   z-index: 99;
-  background: rgba(0,0,0,0.92);
-  backdrop-filter: saturate(180%) blur(28px);
-  -webkit-backdrop-filter: saturate(180%) blur(28px);
+  background: #000000;
   padding: 24px var(--pad) 40px;
   display: flex; flex-direction: column;
   animation: fade 220ms var(--ease);
+  overflow-y: auto;
 }
 .nav__mobile-links {
   display: flex; flex-direction: column;
