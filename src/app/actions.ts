@@ -11,14 +11,19 @@ const emailSchema = z.string().email();
 export async function notifySignup(email: string, dropId?: string) {
   const parse = emailSchema.safeParse(email);
   if (!parse.success) return { ok: false as const, error: 'Email non valida' };
+  const normalized = parse.data.toLowerCase();
   try {
-    await db.notifySignup.upsert({
-      where: { email_dropId: { email: parse.data, dropId: dropId ?? null } } as any,
-      create: { email: parse.data, dropId: dropId ?? null },
-      update: {},
+    const existing = await db.notifySignup.findFirst({
+      where: { email: normalized, dropId: dropId ?? null },
     });
+    if (!existing) {
+      await db.notifySignup.create({
+        data: { email: normalized, dropId: dropId ?? null },
+      });
+    }
     return { ok: true as const };
-  } catch {
+  } catch (e) {
+    console.error('notifySignup failed', e);
     return { ok: false as const, error: 'Riprova tra un attimo' };
   }
 }
