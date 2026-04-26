@@ -45,15 +45,15 @@ export default function EventBanner() {
         <X size={14} />
       </button>
       <div className="event-banner__body">
-        <div className="eyebrow" style={{ marginBottom: 8 }}>
-          Sabato · Wave Staff
+        <div className="eyebrow" style={{ marginBottom: 10 }}>
+          Sabato notte · Wave Staff
         </div>
         <h4 className="event-banner__title">
-          Sabato c&apos;è la <span className="italic">serata.</span>
+          Questo sabato si balla a{' '}
+          <span className="event-banner__venue">Villa Bruguier</span>.
         </h4>
         <p className="event-banner__copy">
-          Al Drop o a Villa Bruguier. Vuoi prenotare un tavolo o unirti a uno?
-          Scrivici in DM su Instagram.
+          Tavoli, lista e info: scrivici in DM su Instagram. Posti limitati.
         </p>
         <a
           href={IG_DM_URL}
@@ -62,8 +62,8 @@ export default function EventBanner() {
           className="event-banner__cta"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={IG_LOGO} alt="Instagram" width={20} height={20} />
-          <span>DM @{IG_HANDLE}</span>
+          <img src={IG_LOGO} alt="" width={18} height={18} />
+          <span>Prenota in DM</span>
         </a>
         <a
           href={IG_URL}
@@ -71,7 +71,7 @@ export default function EventBanner() {
           rel="noreferrer"
           className="event-banner__sub"
         >
-          Apri profilo →
+          @{IG_HANDLE} →
         </a>
       </div>
     </div>

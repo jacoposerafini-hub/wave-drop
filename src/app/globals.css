@@ -1416,19 +1416,26 @@ img, svg { display: block; max-width: 100%; }
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* Soft gradient "image" behind text on the right side */
+/* Image / gradient layer behind text.
+   To use a real image: change the `background` below to
+   `background: url("/event.jpg") center/cover no-repeat;`
+   The ::after rule keeps the left-side text legible. */
 .event-banner__bg {
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 100% 0%, oklch(0.65 0.22 320 / 0.55), transparent 55%),
-    radial-gradient(circle at 90% 100%, oklch(0.6 0.2 25 / 0.4), transparent 60%),
-    radial-gradient(circle at 70% 50%, oklch(0.55 0.18 280 / 0.35), transparent 65%);
-  filter: blur(20px) saturate(140%);
+    radial-gradient(circle at 100% 0%, oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.5), transparent 55%),
+    radial-gradient(circle at 80% 100%, oklch(0.55 0.14 260 / 0.4), transparent 65%);
+  filter: blur(18px) saturate(140%);
   opacity: 0.9;
-  transform: translateZ(0);
   pointer-events: none;
+}
+.event-banner__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10,11,14,0.94) 0%, rgba(10,11,14,0.6) 45%, rgba(10,11,14,0.18) 100%);
 }
 
 .event-banner__close {
@@ -1457,14 +1464,21 @@ img, svg { display: block; max-width: 100%; }
   margin-bottom: 8px;
   color: var(--fg);
 }
-.event-banner__title .italic {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-style: italic;
-  background: linear-gradient(180deg, #fff, #c8a7ff 110%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.event-banner__venue {
+  position: relative;
+  display: inline;
+  color: var(--fg);
+  font-weight: 700;
+  white-space: nowrap;
+  background-image: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  padding-bottom: 2px;
 }
 .event-banner__copy {
   font-size: 13px;
@@ -1476,22 +1490,22 @@ img, svg { display: block; max-width: 100%; }
 .event-banner__cta {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 11px 18px;
-  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   border-radius: var(--r-pill);
   font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
   transition: transform 200ms var(--ease), filter 200ms var(--ease), box-shadow 200ms var(--ease);
-  box-shadow: 0 6px 18px -6px rgba(221,42,123,0.5);
+  box-shadow: 0 6px 18px -6px oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.55);
 }
 .event-banner__cta:hover {
   transform: translateY(-1px);
-  filter: brightness(1.05);
-  box-shadow: 0 10px 24px -6px rgba(221,42,123,0.6);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 24px -6px oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.7);
 }
-.event-banner__cta img { display: block; }
+.event-banner__cta img { display: block; opacity: 0.95; filter: brightness(0) invert(1); }
 .event-banner__sub {
   display: block;
   margin-top: 10px;
