@@ -6,10 +6,10 @@ import { formatPrice } from '@/lib/utils';
 import AddToCartButton from '@/components/AddToCartButton';
 
 export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
-  const products = await db.product.findMany({ select: { slug: true } });
-  return products.map((p) => ({ slug: p.slug }));
+  return [];
 }
 
 export default async function ProductPage({
@@ -17,10 +17,16 @@ export default async function ProductPage({
 }: {
   params: { slug: string };
 }) {
-  const product = await db.product.findUnique({
-    where: { slug: params.slug },
-    include: { drop: true, variants: { orderBy: { size: 'asc' } } },
-  });
+  let product;
+  try {
+    product = await db.product.findUnique({
+      where: { slug: params.slug },
+      include: { drop: true, variants: { orderBy: { size: 'asc' } } },
+    });
+  } catch (e) {
+    console.error('ProductPage DB query failed', e);
+    notFound();
+  }
 
   if (!product) notFound();
 
