@@ -52,6 +52,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="it"
       className={`${manrope.variable} ${jetbrains.variable} ${serif.variable}`}
     >
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/Hero_Banner.png"
+          fetchPriority="high"
+        />
+      </head>
       <body>
         <div className="wash" />
         <div className="grain" />
