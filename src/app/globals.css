@@ -101,6 +101,9 @@ img, svg { display: block; max-width: 100%; }
   font-weight: 600;
   line-height: 0.96;
   letter-spacing: -0.045em;
+  /* Make room for descenders (p, g, y) since line-height < 1 clips
+     the line box short of the glyph and the next element overlaps. */
+  padding-bottom: 0.18em;
 }
 
 .hr { border: 0; border-top: 1px solid var(--line); }
