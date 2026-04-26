@@ -36,16 +36,23 @@ export default async function HomePage() {
   return (
     <main className="page-enter">
       {/* HERO */}
-      <section className="hero container">
-        <div className="hero__grid">
+      <section className="hero hero--nodrop">
+        <div className="hero__grid hero__grid--nodrop">
           <div>
             <div className="eyebrow">
-              <span className="dot" />
               {drop.name} · Notte
             </div>
-            <h1 className="hero__title" style={{ marginTop: 20 }}>
-              <span>Vivi</span>{' '}
-              <span className="italic">la notte</span>
+            <h1
+              className="hero__title"
+              style={{
+                marginTop: 20,
+                fontSize: 'clamp(56px, 7vw, 104px)',
+                lineHeight: 1,
+              }}
+            >
+              <span>Vivi</span>
+              <span style={{ display: 'inline-block', width: '0.4em' }} />
+              <span className="italic">la notte.</span>
             </h1>
             <div className="hero__meta">
               {HERO_META.map((m) => (
@@ -66,9 +73,15 @@ export default async function HomePage() {
                 Vedi i pezzi
               </Link>
             </div>
+            <div style={{ marginTop: 28 }}>
+              <div className="eyebrow" style={{ marginBottom: 10 }}>
+                Avviso 48h prima
+              </div>
+              <NewsletterForm dropId={drop.id} />
+            </div>
           </div>
-          <aside className="hero__aside">
-            <div className="countdown-hero">
+          <aside className="hero__aside hero__aside--nodrop">
+            <div className="countdown-hero countdown-hero--nodrop">
               <div className="countdown-hero__bg" />
               {isUpcoming && drop.startsAt ? (
                 <DropCountdown target={drop.startsAt} />
@@ -78,25 +91,7 @@ export default async function HomePage() {
                 />
               )}
             </div>
-            <div>
-              <div className="eyebrow" style={{ marginBottom: 10 }}>
-                Avviso 48h prima
-              </div>
-              <NewsletterForm dropId={drop.id} />
-            </div>
           </aside>
-        </div>
-      </section>
-
-      <section className="hero-stack">
-        <div className="hero-stack__left">
-          <div className="media tall play" data-label="Video loop · Drop 001 campaign" />
-          <div className="media square" data-label="Foto · Behind the scenes" />
-          <div className="media square" data-label="Flyer · 17.05 — 22:22" />
-        </div>
-        <div className="hero-stack__right">
-          <div className="media wide" data-label="Lookbook · Notturno Hoodie" />
-          <div className="media wide" data-label="Lookbook · Cap 22:22" />
         </div>
       </section>
 
