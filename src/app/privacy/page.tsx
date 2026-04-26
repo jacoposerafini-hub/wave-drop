@@ -3,7 +3,7 @@ export const metadata = { title: 'Privacy' };
 const SECTIONS: Array<{ h: string; b: string }> = [
   {
     h: 'Titolare del trattamento',
-    b: 'Wave Staff — Lucca, Italia. Contatto: ciao@wavestaff.it.',
+    b: 'Wave Staff — Lucca, Italia. Contatto: DM Instagram @_wave.staff_.',
   },
   {
     h: 'Dati raccolti',
@@ -31,7 +31,7 @@ const SECTIONS: Array<{ h: string; b: string }> = [
   },
   {
     h: 'I tuoi diritti',
-    b: 'Artt. 15-22 GDPR: accesso, rettifica, cancellazione, limitazione, portabilità, opposizione, revoca del consenso. Scrivi a ciao@wavestaff.it. Ti rispondiamo entro 30 giorni.',
+    b: 'Artt. 15-22 GDPR: accesso, rettifica, cancellazione, limitazione, portabilità, opposizione, revoca del consenso. Scrivici in DM su Instagram @_wave.staff_. Ti rispondiamo entro 30 giorni.',
   },
   {
     h: 'Reclamo al Garante',

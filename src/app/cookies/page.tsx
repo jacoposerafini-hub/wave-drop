@@ -111,12 +111,14 @@ export default function CookiesPage() {
         <section style={{ borderTop: '1px solid var(--line)', padding: '28px 0' }}>
           <h3 style={{ marginBottom: 10, fontSize: 22 }}>Titolare</h3>
           <p style={{ color: 'var(--fg-dim)', lineHeight: 1.7 }}>
-            Wave Staff — Lucca, Italia. Contatto:{' '}
+            Wave Staff — Lucca, Italia. Contatto: DM Instagram{' '}
             <a
-              href="mailto:ciao@wavestaff.it"
+              href="https://ig.me/m/_wave.staff_"
+              target="_blank"
+              rel="noreferrer"
               style={{ color: 'var(--fg)', textDecoration: 'underline' }}
             >
-              ciao@wavestaff.it
+              @_wave.staff_
             </a>
             . Vedi anche la{' '}
             <a

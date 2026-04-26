@@ -57,12 +57,14 @@ export default function ReturnsPage() {
           textAlign: 'center',
         }}
       >
-        Per aprire un reso scrivi a{' '}
+        Per aprire un reso scrivici in DM su Instagram:{' '}
         <a
-          href="mailto:ciao@wavestaff.it"
+          href="https://ig.me/m/_wave.staff_"
+          target="_blank"
+          rel="noreferrer"
           style={{ color: 'var(--fg)', textDecoration: 'underline' }}
         >
-          ciao@wavestaff.it
+          @_wave.staff_
         </a>
       </p>
     </main>

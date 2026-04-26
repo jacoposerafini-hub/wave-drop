@@ -56,7 +56,7 @@ export default async function HomePage() {
             </div>
             <p className="hero__copy">
               {drop.tagline ||
-                'Drop 007 disponibile dal 17 maggio, alle 22:22. Sei pezzi, produzione limitata, realizzati in Italia. Una volta esauriti, non torneranno più in stock.'}
+                'Drop 001 disponibile dal 17 maggio, alle 22:22. Sei pezzi, produzione limitata, realizzati in Italia. Una volta esauriti, non torneranno più in stock.'}
             </p>
             <div className="row" style={{ marginTop: 24 }}>
               <Link href="#shop" className="btn primary">
@@ -90,7 +90,7 @@ export default async function HomePage() {
 
       <section className="hero-stack">
         <div className="hero-stack__left">
-          <div className="media tall play" data-label="Video loop · Drop 007 campaign" />
+          <div className="media tall play" data-label="Video loop · Drop 001 campaign" />
           <div className="media square" data-label="Foto · Behind the scenes" />
           <div className="media square" data-label="Flyer · 17.05 — 22:22" />
         </div>
@@ -111,7 +111,7 @@ export default async function HomePage() {
           </div>
         </div>
         <div className="eyebrow" style={{ marginBottom: 18 }}>
-          007 · {drop.products.length} pezzi · realizzati in Italia
+          001 · {drop.products.length} pezzi · realizzati in Italia
         </div>
         <div className="product-grid">
           {drop.products.slice(0, 4).map((p, i) => {

@@ -59,7 +59,7 @@ export default function NavbarClient({ cartCount }: { cartCount: number }) {
           ))}
         </nav>
         <div className="nav__right">
-          <span className="chip live hide-sm">Drop 007 · Live</span>
+          <span className="chip live hide-sm">Drop 001 · Live</span>
           <Link
             href="/account"
             className="nav__cart hide-sm-only"
