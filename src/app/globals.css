@@ -1392,3 +1392,82 @@ img, svg { display: block; max-width: 100%; }
   .signup input { padding: 10px 14px; font-size: 13.5px; }
   .signup button { padding: 0 16px; font-size: 12.5px; }
 }
+
+/* Event Banner — floating IG DM CTA, bottom right */
+.event-banner {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 650;
+  width: min(320px, calc(100vw - 32px));
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  padding: 18px 20px 18px 18px;
+  background: linear-gradient(180deg, rgba(22,24,28,0.92), rgba(14,14,16,0.92));
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 60px -18px rgba(0,0,0,0.7);
+  animation: event-pop 360ms var(--ease);
+}
+@keyframes event-pop {
+  from { transform: translateY(20px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+.event-banner__close {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 26px; height: 26px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--r-pill);
+  color: var(--fg-mute);
+  transition: all 180ms var(--ease);
+}
+.event-banner__close:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--fg);
+}
+.event-banner__icon {
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--r-pill);
+  background: oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.16);
+  color: var(--accent);
+  border: 1px solid oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.3);
+  flex-shrink: 0;
+}
+.event-banner__body { min-width: 0; }
+.event-banner__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.event-banner__copy {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-dim);
+  margin-bottom: 12px;
+}
+.event-banner__cta {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .event-banner {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    padding: 14px 16px;
+    gap: 12px;
+    grid-template-columns: 36px 1fr;
+  }
+  .event-banner__icon { width: 36px; height: 36px; }
+  .event-banner__title { font-size: 15px; }
+  .event-banner__copy { font-size: 12.5px; }
+}
