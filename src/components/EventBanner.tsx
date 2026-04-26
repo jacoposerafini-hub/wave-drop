@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 
-const STORAGE_KEY = 'wd_event_banner_seen';
+// Bump version when copy/design changes — invalidates prior "seen" flags so users see the new version once.
+const STORAGE_KEY = 'wd_event_banner_seen_v2';
 const SHOW_DELAY_MS = 9000; // 9s after load
 const IG_HANDLE = '_wave.staff_';
 const IG_URL = `https://instagram.com/${IG_HANDLE}`;
