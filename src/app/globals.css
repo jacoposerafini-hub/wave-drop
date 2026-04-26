@@ -1505,7 +1505,7 @@ img, svg { display: block; max-width: 100%; }
   filter: brightness(1.06);
   box-shadow: 0 10px 24px -6px oklch(var(--accent-l) var(--accent-c) var(--accent-h) / 0.7);
 }
-.event-banner__cta img { display: block; opacity: 0.95; filter: brightness(0) invert(1); }
+.event-banner__cta img { display: block; }
 .event-banner__sub {
   display: block;
   margin-top: 10px;

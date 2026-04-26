@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 
 // Bump version when copy/design changes — invalidates prior "seen" flags so users see the new version once.
-const STORAGE_KEY = 'wd_event_banner_seen_v2';
+const STORAGE_KEY = 'wd_event_banner_seen_v3';
 const SHOW_DELAY_MS = 9000; // 9s after load
 const IG_HANDLE = '_wave.staff_';
 const IG_URL = `https://instagram.com/${IG_HANDLE}`;
@@ -63,7 +63,7 @@ export default function EventBanner() {
           className="event-banner__cta"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={IG_LOGO} alt="" width={18} height={18} />
+          <img src={IG_LOGO} alt="" width={20} height={20} />
           <span>Prenota in DM</span>
         </a>
         <a
