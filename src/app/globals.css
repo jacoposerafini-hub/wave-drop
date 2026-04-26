@@ -1348,9 +1348,25 @@ img, svg { display: block; max-width: 100%; }
   .btn { padding: 12px 20px; font-size: 13.5px; }
   .row { gap: 8px; }
 
-  /* Cookie banner */
-  .cookie-banner { padding: 14px 16px; gap: 10px; }
-  .cookie-banner__text p { font-size: 12.5px; }
+  /* Cookie banner — full width, stack on mobile */
+  .cookie-banner {
+    left: 12px; right: 12px; bottom: 12px;
+    transform: none;
+    width: auto; max-width: none;
+    padding: 16px;
+    gap: 12px;
+    flex-direction: row;
+    align-items: flex-start;
+    border-radius: var(--r-lg);
+  }
+  @keyframes slide-up {
+    from { transform: translateY(24px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .cookie-banner__icon { width: 36px; height: 36px; }
+  .cookie-banner__text p { font-size: 12.5px; line-height: 1.5; margin-bottom: 10px; }
+  .cookie-banner__actions { gap: 6px; }
+  .cookie-banner__actions .btn { padding: 9px 12px; font-size: 12.5px; }
 
   /* Archive */
   .archive__row { padding: 18px 12px; gap: 12px; }

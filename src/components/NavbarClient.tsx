@@ -39,7 +39,8 @@ export default function NavbarClient({ cartCount }: { cartCount: number }) {
   }, [open]);
 
   return (
-    <header className="nav">
+    <>
+      <header className="nav">
       <div className="container nav__inner">
         <div className="nav__logo">
           <Link href="/">
@@ -81,6 +82,7 @@ export default function NavbarClient({ cartCount }: { cartCount: number }) {
           </button>
         </div>
       </div>
+      </header>
 
       {open && (
         <div
@@ -104,6 +106,6 @@ export default function NavbarClient({ cartCount }: { cartCount: number }) {
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }
