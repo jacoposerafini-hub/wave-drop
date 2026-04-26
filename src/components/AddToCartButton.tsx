@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShoppingBag } from 'lucide-react';
 import { addToCartAction } from '@/app/actions';
@@ -10,6 +10,14 @@ interface Variant {
   size: string;
   stock: number;
   reserved: number;
+  lemonSqueezyUrl?: string | null;
+}
+
+declare global {
+  interface Window {
+    LemonSqueezy?: { Url: { Open: (url: string) => void } };
+    createLemonSqueezy?: () => void;
+  }
 }
 
 type MsgType = 'ok' | 'err' | null;
@@ -27,6 +35,31 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
   const selVariant = variants.find((v) => v.id === selected);
   const available = selVariant ? selVariant.stock - selVariant.reserved : 0;
   const allSoldOut = variants.every((v) => v.stock - v.reserved <= 0);
+  const lsUrl = selVariant?.lemonSqueezyUrl;
+
+  // Initialize Lemon Squeezy overlay once script is loaded
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.createLemonSqueezy) {
+      window.createLemonSqueezy();
+    }
+  }, []);
+
+  function buyNow() {
+    if (!selected) {
+      setMsg({ text: 'Scegli una taglia', type: 'err' });
+      setShake(true);
+      setTimeout(() => setShake(false), 400);
+      return;
+    }
+    if (!lsUrl) return;
+    if (window.LemonSqueezy?.Url?.Open) {
+      window.LemonSqueezy.Url.Open(lsUrl);
+    } else {
+      // Fallback: open in new tab if overlay script not ready
+      window.open(lsUrl, '_blank', 'noopener,noreferrer');
+    }
+  }
 
   function add() {
     if (!selected) {
@@ -91,27 +124,50 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
         </div>
       </div>
 
-      <button
-        onClick={add}
-        disabled={pending || allSoldOut}
-        className="btn primary"
-        style={{
-          width: '100%',
-          opacity: allSoldOut ? 0.5 : 1,
-          cursor: allSoldOut ? 'not-allowed' : 'pointer',
-        }}
-      >
-        {allSoldOut ? (
-          'Sold out'
-        ) : pending ? (
-          'Aggiunta...'
-        ) : (
-          <>
-            <ShoppingBag size={16} />
-            Aggiungi al carrello
-          </>
-        )}
-      </button>
+      {lsUrl ? (
+        <button
+          onClick={buyNow}
+          disabled={allSoldOut}
+          className="btn primary lemonsqueezy-button"
+          data-lemonsqueezy-url={lsUrl}
+          style={{
+            width: '100%',
+            opacity: allSoldOut ? 0.5 : 1,
+            cursor: allSoldOut ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {allSoldOut ? (
+            'Sold out'
+          ) : (
+            <>
+              <ShoppingBag size={16} />
+              Acquista ora
+            </>
+          )}
+        </button>
+      ) : (
+        <button
+          onClick={add}
+          disabled={pending || allSoldOut}
+          className="btn primary"
+          style={{
+            width: '100%',
+            opacity: allSoldOut ? 0.5 : 1,
+            cursor: allSoldOut ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {allSoldOut ? (
+            'Sold out'
+          ) : pending ? (
+            'Aggiunta...'
+          ) : (
+            <>
+              <ShoppingBag size={16} />
+              Aggiungi al carrello
+            </>
+          )}
+        </button>
+      )}
 
       {msg.type && (
         <p

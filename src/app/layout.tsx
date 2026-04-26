@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Manrope, JetBrains_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
@@ -195,6 +196,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CartDrawer />
         <CookieBanner />
         <EventBanner />
+        <Script
+          src="https://app.lemonsqueezy.com/js/lemon.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

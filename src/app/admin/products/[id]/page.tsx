@@ -32,11 +32,13 @@ async function upsertVariant(formData: FormData) {
   const productId = String(formData.get('productId'));
   const size = String(formData.get('size') ?? '').trim().toUpperCase();
   const stock = Number(formData.get('stock') ?? 0);
+  const lemonSqueezyUrlRaw = String(formData.get('lemonSqueezyUrl') ?? '').trim();
+  const lemonSqueezyUrl = lemonSqueezyUrlRaw || null;
   if (!size) return;
   await db.variant.upsert({
     where: { productId_size: { productId, size } },
-    create: { productId, size, stock },
-    update: { stock },
+    create: { productId, size, stock, lemonSqueezyUrl },
+    update: { stock, lemonSqueezyUrl },
   });
   revalidatePath(`/admin/products/${productId}`);
 }
@@ -95,32 +97,52 @@ export default async function EditProduct({ params, searchParams }: { params: { 
       <div className="flex flex-col gap-3">
         <h2 className="display text-3xl">VARIANTI / STOCK</h2>
         {product.variants.map((v) => (
-          <div key={v.id} className="card p-4 flex items-center gap-4">
-            <p className="font-semibold w-20">{v.size}</p>
-            <form action={upsertVariant} className="flex items-center gap-2 flex-1">
+          <div key={v.id} className="card p-4 flex flex-col gap-3">
+            <form
+              action={upsertVariant}
+              className="flex flex-wrap items-center gap-2"
+            >
               <input type="hidden" name="productId" value={product.id} />
               <input type="hidden" name="size" value={v.size} />
+              <p className="font-semibold w-16">{v.size}</p>
               <input
                 type="number"
                 name="stock"
                 defaultValue={v.stock}
                 className="input w-24"
               />
-              <span className="text-xs text-muted">stock (riservati: {v.reserved})</span>
-              <button className="btn-ghost ml-auto px-3 py-1.5 text-xs">Aggiorna</button>
+              <span className="text-xs text-muted">
+                stock (riservati: {v.reserved})
+              </span>
+              <input
+                type="url"
+                name="lemonSqueezyUrl"
+                defaultValue={v.lemonSqueezyUrl ?? ''}
+                placeholder="Lemon Squeezy URL (es. https://store.lemonsqueezy.com/buy/UUID)"
+                className="input flex-1 min-w-[280px] font-mono text-xs"
+              />
+              <button className="btn-ghost px-3 py-1.5 text-xs">Aggiorna</button>
             </form>
-            <form action={deleteVariant}>
+            <form action={deleteVariant} className="self-end">
               <input type="hidden" name="id" value={v.id} />
               <input type="hidden" name="productId" value={product.id} />
-              <button className="text-danger text-xs hover:underline">Elimina</button>
+              <button className="text-danger text-xs hover:underline">
+                Elimina taglia
+              </button>
             </form>
           </div>
         ))}
 
-        <form action={upsertVariant} className="card p-4 flex items-center gap-2">
+        <form action={upsertVariant} className="card p-4 flex flex-wrap items-center gap-2">
           <input type="hidden" name="productId" value={product.id} />
           <input name="size" placeholder="Taglia (es. M)" className="input w-32" required />
           <input name="stock" type="number" placeholder="Stock" className="input w-32" required />
+          <input
+            name="lemonSqueezyUrl"
+            type="url"
+            placeholder="Lemon Squeezy URL (opzionale)"
+            className="input flex-1 min-w-[260px] font-mono text-xs"
+          />
           <button className="btn-primary px-4 py-2">+ Aggiungi taglia</button>
         </form>
       </div>

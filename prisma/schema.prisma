@@ -45,13 +45,14 @@ model Product {
 }
 
 model Variant {
-  id         String      @id @default(cuid())
-  productId  String
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  size       String
-  stock      Int         @default(0)
-  reserved   Int         @default(0)
-  orderItems OrderItem[]
+  id               String      @id @default(cuid())
+  productId        String
+  product          Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size             String
+  stock            Int         @default(0)
+  reserved         Int         @default(0)
+  lemonSqueezyUrl  String?
+  orderItems       OrderItem[]
   @@unique([productId, size])
 }
 
