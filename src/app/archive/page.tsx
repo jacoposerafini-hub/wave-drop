@@ -62,8 +62,15 @@ export default async function ArchivePage() {
             marginTop: 40,
           }}
         >
-          <div className="display" style={{ fontSize: 56, color: 'var(--fg-mute)' }}>
-            GRAVEYARD VUOTO
+          <div
+            className="display"
+            style={{
+              fontSize: 'clamp(32px, 9vw, 56px)',
+              color: 'var(--fg-mute)',
+              lineHeight: 1.05,
+            }}
+          >
+            Graveyard vuoto
           </div>
           <p style={{ color: 'var(--fg-dim)', marginTop: 12, fontSize: 14, maxWidth: 420, marginLeft: 'auto', marginRight: 'auto' }}>
             Nessun drop archiviato. Il Drop 001 è ancora vivo. Fatti trovare

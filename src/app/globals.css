@@ -162,7 +162,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .ship-banner__inner {
   display: flex; align-items: center; justify-content: center;
-  gap: 14px; flex-wrap: wrap;
+  gap: 14px; flex-wrap: nowrap; white-space: nowrap;
   padding: 14px 20px;
   font-family: var(--font-body);
   font-size: 12.5px;
@@ -1244,8 +1244,13 @@ img, svg { display: block; max-width: 100%; }
   .hide-sm-only { display: none !important; }
   .nav__cart { width: 40px; height: 40px; }
 
-  /* Marquee tighter */
-  .ship-banner__inner { padding: 10px 16px; font-size: 11px; gap: 8px; }
+  /* Marquee tighter — keep one line, shrink letter-spacing */
+  .ship-banner__inner {
+    padding: 10px 12px;
+    font-size: clamp(9px, 2.6vw, 11px);
+    gap: 8px;
+    letter-spacing: 0.06em;
+  }
 
   /* Hero — single column, smaller padding */
   .hero { padding: 40px var(--pad) 32px; }
