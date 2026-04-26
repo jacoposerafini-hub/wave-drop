@@ -98,15 +98,16 @@ export default async function HomePage() {
       <div className="container" id="shop">
         <div className="section-head">
           <div className="section-head__l">
-            Il <span className="italic">Drop</span>
+            Solo <span className="italic">stanotte.</span>
           </div>
           <div className="section-head__r">
-            Ogni pezzo disponibile fino a esaurimento. Nessun riassortimento,
-            nessuna ristampa.
+            Tirature ridotte, edizione numerata. Quando finiscono, finiscono
+            davvero — niente restock, niente ristampe, nessuna seconda chance.
           </div>
         </div>
         <div className="eyebrow" style={{ marginBottom: 18 }}>
-          001 · {drop.products.length} pezzi · realizzati in Italia
+          {drop.name} · {drop.products.length} pezzi · made in Italy · 22:22
+          CET
         </div>
         <div className="product-grid">
           {drop.products.slice(0, 4).map((p, i) => {
@@ -132,7 +133,7 @@ export default async function HomePage() {
         {drop.products.length > 4 && (
           <div className="row" style={{ justifyContent: 'center', marginTop: 28 }}>
             <Link href={`/drop/${drop.slug}`} className="btn ghost">
-              Vedi tutti i pezzi <ArrowRight size={16} />
+              Tutto il drop <ArrowRight size={16} />
             </Link>
           </div>
         )}
@@ -142,11 +143,19 @@ export default async function HomePage() {
             <div className="eyebrow" style={{ marginBottom: 14 }}>
               Dietro il drop
             </div>
-            <h3>Una città, sei pezzi.</h3>
+            <h3>
+              Nato <span className="italic">di notte.</span>
+            </h3>
             <p>
-              Ogni capo è ispirato a un momento della notte di Lucca — dal
-              tramonto alle ore piccole. Prodotti tra Prato e Lucca, tirature
-              ridotte, nessun restock.
+              Ogni pezzo prende forma da un momento di una serata a Lucca —
+              dal primo bicchiere alle ore piccole. Tessuti pesanti, stampe
+              fatte a mano, taglio oversize. Pensato per chi resta fino alla
+              fine.
+            </p>
+            <p style={{ marginTop: 14 }}>
+              Tagliato e cucito tra Prato e Lucca. Numerato pezzo per pezzo.
+              Quando il drop chiude, sparisce nell&apos;archivio e non torna
+              più.
             </p>
             <div className="row" style={{ marginTop: 20 }}>
               <Link href="/about" className="btn ghost sm">
