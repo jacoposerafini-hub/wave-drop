@@ -1,55 +1,41 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Sparkles, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
-const STORAGE_KEY = 'wd_event_banner_dismissed';
-const SHOW_DELAY_MS = 2500;
+const STORAGE_KEY = 'wd_event_banner_seen';
+const SHOW_DELAY_MS = 9000; // 9s after load
 const IG_HANDLE = '_wave.staff_';
+const IG_URL = `https://instagram.com/${IG_HANDLE}`;
 const IG_DM_URL = `https://ig.me/m/${IG_HANDLE}`;
+const IG_LOGO =
+  'https://imgs.search.brave.com/4QcGZpzmZob664SiqtBms2Azjb1cboTcbHZ4YWPRt0o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZnJlZXBuZ2xvZ29z/LmNvbS91cGxvYWRz/L2xvZ28taWctcG5n/L2xvZ28taWctaW5z/dGFncmFtLW5ldy1s/b2dvLXZlY3Rvci1k/b3dubG9hZC0xMy5w/bmc';
 
 export default function EventBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const dismissed = localStorage.getItem(STORAGE_KEY);
-    if (dismissed) return;
 
-    // Wait for cookie banner consent before showing
-    const hasCookieConsent = document.cookie
-      .split('; ')
-      .some((r) => r.startsWith('wd_consent='));
-
-    const delay = hasCookieConsent ? SHOW_DELAY_MS : SHOW_DELAY_MS + 1500;
+    // Already seen this session? skip
+    if (localStorage.getItem(STORAGE_KEY)) return;
 
     const t = setTimeout(() => {
-      // Re-check at fire time
-      const stillDismissed = localStorage.getItem(STORAGE_KEY);
-      if (!stillDismissed) setShow(true);
-    }, delay);
+      if (localStorage.getItem(STORAGE_KEY)) return;
+      localStorage.setItem(STORAGE_KEY, '1'); // mark seen on first display
+      setShow(true);
+    }, SHOW_DELAY_MS);
 
-    const onConsent = () => {
-      const now = localStorage.getItem(STORAGE_KEY);
-      if (!now) setShow(true);
-    };
-    window.addEventListener('consent-change', onConsent);
-
-    return () => {
-      clearTimeout(t);
-      window.removeEventListener('consent-change', onConsent);
-    };
+    return () => clearTimeout(t);
   }, []);
 
-  const dismiss = () => {
-    localStorage.setItem(STORAGE_KEY, '1');
-    setShow(false);
-  };
+  const dismiss = () => setShow(false);
 
   if (!show) return null;
 
   return (
     <div className="event-banner" role="complementary" aria-label="Evento Wave Staff">
+      <div className="event-banner__bg" aria-hidden="true" />
       <button
         type="button"
         className="event-banner__close"
@@ -58,28 +44,34 @@ export default function EventBanner() {
       >
         <X size={14} />
       </button>
-      <div className="event-banner__icon" aria-hidden="true">
-        <Sparkles size={18} />
-      </div>
       <div className="event-banner__body">
-        <div className="eyebrow" style={{ marginBottom: 6 }}>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>
           Sabato · Wave Staff
         </div>
-        <h4 className="event-banner__title">Vuoi un tavolo?</h4>
+        <h4 className="event-banner__title">
+          Sabato c&apos;è la <span className="italic">serata.</span>
+        </h4>
         <p className="event-banner__copy">
-          Sabato c&apos;è la serata. Prenota tavolo o unisciti a uno —
-          scrivici in DM su Instagram.
+          Al Drop o a Villa Bruguier. Vuoi prenotare un tavolo o unirti a uno?
+          Scrivici in DM su Instagram.
         </p>
         <a
           href={IG_DM_URL}
           target="_blank"
           rel="noreferrer"
-          className="btn primary sm event-banner__cta"
-          onClick={() => {
-            // Don't auto-dismiss on click — user might come back.
-          }}
+          className="event-banner__cta"
         >
-          DM @{IG_HANDLE}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={IG_LOGO} alt="Instagram" width={20} height={20} />
+          <span>DM @{IG_HANDLE}</span>
+        </a>
+        <a
+          href={IG_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="event-banner__sub"
+        >
+          Apri profilo →
         </a>
       </div>
     </div>
