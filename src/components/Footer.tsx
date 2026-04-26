@@ -84,7 +84,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__bottom">
-          <span>© 2026 Wave Staff · Lucca, IT · P.IVA 00000000000</span>
+          <span>© 2026 Wave Staff · Lucca, IT</span>
           <span>
             <Link href="/privacy">Privacy</Link>
             <Link href="/cookies">Cookie</Link>

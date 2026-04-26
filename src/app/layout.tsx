@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Marquee from '@/components/Marquee';
 import CartDrawer from '@/components/CartDrawer';
-import CookieBanner from '@/components/CookieBanner';
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -59,7 +58,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Footer />
         <CartDrawer />
-        <CookieBanner />
       </body>
     </html>
   );

@@ -3,23 +3,23 @@ export const metadata = { title: 'Privacy' };
 const SECTIONS: Array<{ h: string; b: string }> = [
   {
     h: 'Titolare del trattamento',
-    b: 'Wave Staff — Lucca, Italia. P.IVA 00000000000. Contatto: ciao@wavestaff.it.',
+    b: 'Wave Staff — Lucca, Italia. Contatto: ciao@wavestaff.it.',
   },
   {
     h: 'Dati raccolti',
-    b: 'Email, nome, indirizzo di spedizione, dati di pagamento (gestiti da Stripe), dati di navigazione (cookie tecnici e analitici anonimi).',
+    b: 'Email, nome, indirizzo di spedizione, dati di pagamento (gestiti da Stripe). Solo cookie tecnici, nessun cookie analitico o di profilazione.',
   },
   {
     h: 'Finalità',
-    b: 'Gestione ordini, spedizione, assistenza clienti, newsletter (solo con consenso), analisi aggregata del sito per migliorare la UX.',
+    b: 'Gestione ordini, spedizione, assistenza clienti, newsletter (solo con consenso). Nessun tracciamento o profilazione.',
   },
   {
     h: 'Base giuridica',
-    b: 'Esecuzione del contratto (art. 6.1.b GDPR) per gli ordini; consenso (art. 6.1.a) per newsletter e cookie analitici; obbligo di legge (art. 6.1.c) per fatturazione; legittimo interesse (art. 6.1.f) per prevenzione frodi e sicurezza del sito.',
+    b: 'Esecuzione del contratto (art. 6.1.b GDPR) per gli ordini; consenso (art. 6.1.a) per newsletter; obbligo di legge (art. 6.1.c) per fatturazione; legittimo interesse (art. 6.1.f) per prevenzione frodi e sicurezza del sito.',
   },
   {
     h: 'Conservazione',
-    b: 'Dati ordini conservati per 10 anni (obblighi fiscali). Dati newsletter finché resti iscritto. Dati di navigazione anonimi per 14 mesi.',
+    b: 'Dati ordini conservati per 10 anni (obblighi fiscali). Dati newsletter finché resti iscritto.',
   },
   {
     h: 'Terze parti e destinatari',

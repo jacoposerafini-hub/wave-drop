@@ -1,4 +1,4 @@
-'use client';
+export const metadata = { title: 'Cookie' };
 
 const TABLE: Array<{
   name: string;
@@ -6,12 +6,6 @@ const TABLE: Array<{
   purpose: string;
   duration: string;
 }> = [
-  {
-    name: 'wd_consent',
-    type: 'Tecnico',
-    purpose: 'Memorizza la scelta fatta sul banner cookie.',
-    duration: '6 mesi',
-  },
   {
     name: 'wd_cart',
     type: 'Tecnico',
@@ -24,19 +18,7 @@ const TABLE: Array<{
     purpose: 'Sblocca drop password-protetti dopo inserimento codice.',
     duration: 'Sessione',
   },
-  {
-    name: '__stripe_*',
-    type: 'Tecnico (terza parte)',
-    purpose: 'Prevenzione frodi e gestione pagamenti. Gestito da Stripe.',
-    duration: '1 anno',
-  },
 ];
-
-function resetConsent() {
-  if (typeof document === 'undefined') return;
-  document.cookie = 'wd_consent=; path=/; max-age=0; samesite=lax';
-  window.location.reload();
-}
 
 export default function CookiesPage() {
   return (
@@ -61,9 +43,9 @@ export default function CookiesPage() {
           <h3 style={{ marginBottom: 10, fontSize: 22 }}>Cosa sono i cookie</h3>
           <p style={{ color: 'var(--fg-dim)', lineHeight: 1.7 }}>
             I cookie sono piccoli file di testo salvati sul tuo dispositivo
-            quando visiti un sito. Servono a ricordare scelte, far funzionare
-            funzionalità (carrello, login) e, se autorizzati, a misurare
-            aggregatamente l&apos;uso del sito.
+            quando visiti un sito. Su Wave Drop usiamo solo cookie tecnici per
+            far funzionare carrello, preferenze e accessi. Nessun cookie
+            analitico, di profilazione o pubblicitario.
           </p>
         </section>
 
@@ -75,13 +57,11 @@ export default function CookiesPage() {
             richiedono consenso.
             <br />
             <br />
-            <strong>Analitici anonimi</strong>: misurano l&apos;uso aggregato
-            (pagine viste, durata). Solo con consenso esplicito. Attualmente
-            non attivi.
+            <strong>Analitici</strong>: non utilizzati su questo sito.
             <br />
             <br />
             <strong>Profilazione/pubblicità</strong>: non utilizzati su questo
-            sito.
+            sito. Nessun tracciamento di terze parti.
           </p>
         </section>
 
@@ -122,24 +102,16 @@ export default function CookiesPage() {
         <section style={{ borderTop: '1px solid var(--line)', padding: '28px 0' }}>
           <h3 style={{ marginBottom: 10, fontSize: 22 }}>Gestione del consenso</h3>
           <p style={{ color: 'var(--fg-dim)', lineHeight: 1.7 }}>
-            Puoi modificare o revocare il consenso in qualsiasi momento
-            cliccando qui sotto. Puoi anche gestire i cookie direttamente dalle
-            impostazioni del tuo browser.
+            Usiamo solo cookie tecnici, quindi non è richiesto consenso.
+            Puoi comunque eliminare tutti i cookie del sito dalle impostazioni
+            del tuo browser in qualsiasi momento.
           </p>
-          <button
-            type="button"
-            onClick={resetConsent}
-            className="btn ghost"
-            style={{ marginTop: 18 }}
-          >
-            Reimposta preferenze cookie
-          </button>
         </section>
 
         <section style={{ borderTop: '1px solid var(--line)', padding: '28px 0' }}>
           <h3 style={{ marginBottom: 10, fontSize: 22 }}>Titolare</h3>
           <p style={{ color: 'var(--fg-dim)', lineHeight: 1.7 }}>
-            Wave Staff — Lucca, Italia. P.IVA 00000000000. Contatto:{' '}
+            Wave Staff — Lucca, Italia. Contatto:{' '}
             <a
               href="mailto:ciao@wavestaff.it"
               style={{ color: 'var(--fg)', textDecoration: 'underline' }}
