@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, User } from 'lucide-react';
 
 const NAV = [
   { href: '/', label: 'Shop', key: 'shop' },
@@ -40,6 +40,9 @@ export default function NavbarClient({ cartCount }: { cartCount: number }) {
         </nav>
         <div className="nav__right">
           <span className="chip live hide-sm">Drop 007 · Live</span>
+          <Link href="/account" className="nav__cart" aria-label="Account">
+            <User size={18} />
+          </Link>
           <a href="#cart" className="nav__cart" aria-label="Carrello">
             <ShoppingBag size={18} />
             {cartCount > 0 && <span className="nav__cart-count">{cartCount}</span>}
