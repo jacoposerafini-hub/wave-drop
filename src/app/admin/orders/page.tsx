@@ -14,6 +14,14 @@ async function updateStatus(formData: FormData) {
   revalidatePath('/admin/orders');
 }
 
+const STATUS_PILL: Record<string, string> = {
+  paid: 'admin-pill admin-pill--ok',
+  shipped: 'admin-pill admin-pill--live',
+  delivered: 'admin-pill admin-pill--ok',
+  pending: 'admin-pill admin-pill--warn',
+  cancelled: 'admin-pill admin-pill--danger',
+};
+
 export default async function AdminOrders() {
   const orders = await db.order.findMany({
     orderBy: { createdAt: 'desc' },
@@ -22,28 +30,61 @@ export default async function AdminOrders() {
   });
 
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="display text-5xl">ORDINI</h1>
+    <>
+      <div className="admin-page-head">
+        <h1 className="admin-page-head__title">Ordini</h1>
+      </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="admin-list">
         {orders.map((o) => (
-          <div key={o.id} className="card p-5 flex flex-col gap-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <Link href={`/orders/${o.id}`} className="font-display text-2xl hover:text-accent">
+          <div key={o.id} className="admin-card" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+              <Link
+                href={`/orders/${o.id}`}
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                  fontSize: 20,
+                  letterSpacing: '-0.025em',
+                  color: 'var(--fg)',
+                }}
+              >
                 {o.orderNumber}
               </Link>
-              <span className={`pill ${o.status === 'paid' ? 'bg-success/20 text-success' : o.status === 'shipped' ? 'bg-accent/20 text-accent' : o.status === 'pending' ? 'bg-white/5 text-muted' : 'bg-white/5 text-muted'}`}>
+              <span className={STATUS_PILL[o.status] ?? 'admin-pill'}>
                 {o.status}
               </span>
-              <span className="text-xs text-muted">{o.createdAt.toLocaleString('it-IT')}</span>
-              <p className="ml-auto display text-xl tabular-nums">{formatPrice(o.totalCents)}</p>
+              <span style={{ fontSize: 12.5, color: 'var(--fg-mute)' }}>
+                {o.createdAt.toLocaleString('it-IT')}
+              </span>
+              <p
+                style={{
+                  marginLeft: 'auto',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                  fontSize: 18,
+                  letterSpacing: '-0.025em',
+                  fontVariantNumeric: 'tabular-nums',
+                }}
+              >
+                {formatPrice(o.totalCents)}
+              </p>
             </div>
-            <p className="text-sm text-muted">
-              {o.email} · {o.shippingName || '—'} · {o.items.length} articol{o.items.length === 1 ? 'o' : 'i'}
+            <p style={{ fontSize: 13.5, color: 'var(--fg-dim)' }}>
+              {o.email} · {o.shippingName || '—'} · {o.items.length} articol
+              {o.items.length === 1 ? 'o' : 'i'}
             </p>
-            <form action={updateStatus} className="flex items-center gap-2">
+            <form
+              action={updateStatus}
+              style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}
+            >
               <input type="hidden" name="id" value={o.id} />
-              <select name="status" defaultValue={o.status} className="input w-40 py-2">
+              <select
+                name="status"
+                defaultValue={o.status}
+                className="admin-select"
+                style={{ width: 160 }}
+              >
                 <option value="pending">Pending</option>
                 <option value="paid">Paid</option>
                 <option value="shipped">Shipped</option>
@@ -54,14 +95,19 @@ export default async function AdminOrders() {
                 name="trackingNumber"
                 defaultValue={o.trackingNumber ?? ''}
                 placeholder="Tracking #"
-                className="input flex-1 py-2"
+                className="admin-input"
+                style={{ flex: 1, minWidth: 200 }}
               />
-              <button className="btn-ghost px-3 py-2 text-xs">Aggiorna</button>
+              <button type="submit" className="btn ghost sm">
+                Aggiorna
+              </button>
             </form>
           </div>
         ))}
-        {orders.length === 0 && <p className="text-muted">Nessun ordine.</p>}
+        {orders.length === 0 && (
+          <div className="admin-empty">Nessun ordine.</div>
+        )}
       </div>
-    </div>
+    </>
   );
 }

@@ -31,6 +31,13 @@ async function deleteDrop(formData: FormData) {
   revalidatePath('/');
 }
 
+const STATUS_PILL: Record<string, string> = {
+  live: 'admin-pill admin-pill--live',
+  upcoming: 'admin-pill admin-pill--warn',
+  sold_out: 'admin-pill admin-pill--danger',
+  archived: 'admin-pill',
+};
+
 export default async function AdminDrops() {
   const drops = await db.drop.findMany({
     orderBy: { createdAt: 'desc' },
@@ -38,39 +45,67 @@ export default async function AdminDrops() {
   });
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="display text-5xl">DROPS</h1>
-        <form action={createDrop} className="flex gap-2">
-          <input name="name" placeholder="Nome drop" className="input w-64" required />
-          <button className="btn-primary px-4"><Plus size={14} /> Crea</button>
+    <>
+      <div className="admin-page-head">
+        <h1 className="admin-page-head__title">Drops</h1>
+        <form action={createDrop} className="admin-page-head__actions">
+          <input
+            name="name"
+            placeholder="Nome drop"
+            required
+            className="admin-input"
+            style={{ width: 240 }}
+          />
+          <button type="submit" className="btn primary">
+            <Plus size={14} /> Crea
+          </button>
         </form>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="admin-list">
         {drops.map((d) => (
-          <div key={d.id} className="card p-4 flex items-center gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-3">
-                <p className="font-semibold">{d.name}</p>
-                <span className={`pill ${d.status === 'live' ? 'bg-danger text-white' : 'bg-white/5 text-muted'}`}>
+          <div key={d.id} className="admin-list-row">
+            <div className="admin-list-row__main">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                <p className="admin-list-row__title">{d.name}</p>
+                <span className={STATUS_PILL[d.status] ?? 'admin-pill'}>
                   {d.status}
                 </span>
               </div>
-              <p className="text-xs text-muted">
-                {d._count.products} prodott{d._count.products === 1 ? 'o' : 'i'} · /{d.slug}
+              <p className="admin-list-row__meta">
+                {d._count.products} prodott
+                {d._count.products === 1 ? 'o' : 'i'} · /{d.slug}
               </p>
             </div>
-            <Link href={`/admin/drops/${d.id}`} className="btn-ghost px-3 py-1.5 text-xs">Modifica</Link>
-            <Link href={`/drop/${d.slug}`} target="_blank" className="btn-ghost px-3 py-1.5 text-xs">Visualizza</Link>
-            <form action={deleteDrop}>
-              <input type="hidden" name="id" value={d.id} />
-              <button className="text-danger text-xs px-3 py-1.5 border border-danger/40 hover:bg-danger/10">Elimina</button>
-            </form>
+            <div className="admin-list-row__actions">
+              <Link href={`/admin/drops/${d.id}`} className="btn ghost sm">
+                Modifica
+              </Link>
+              <Link
+                href={`/drop/${d.slug}`}
+                target="_blank"
+                rel="noreferrer"
+                className="btn ghost sm"
+              >
+                Visualizza
+              </Link>
+              <form action={deleteDrop}>
+                <input type="hidden" name="id" value={d.id} />
+                <button
+                  type="submit"
+                  className="btn ghost sm"
+                  style={{ color: 'var(--danger)' }}
+                >
+                  Elimina
+                </button>
+              </form>
+            </div>
           </div>
         ))}
-        {drops.length === 0 && <p className="text-muted">Nessun drop. Creane uno.</p>}
+        {drops.length === 0 && (
+          <div className="admin-empty">Nessun drop. Creane uno qui sopra.</div>
+        )}
       </div>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { revalidatePath } from 'next/cache';
+import { ArrowLeft } from 'lucide-react';
 import { db } from '@/lib/db';
 import { formatPrice } from '@/lib/utils';
 
@@ -20,7 +21,9 @@ async function updateDrop(formData: FormData) {
       status: String(formData.get('status') ?? 'upcoming'),
       accessType: String(formData.get('accessType') ?? 'public'),
       password: String(formData.get('password') ?? '') || null,
-      startsAt: formData.get('startsAt') ? new Date(String(formData.get('startsAt'))) : null,
+      startsAt: formData.get('startsAt')
+        ? new Date(String(formData.get('startsAt')))
+        : null,
       featured: formData.get('featured') === 'on',
     },
   });
@@ -29,7 +32,13 @@ async function updateDrop(formData: FormData) {
   redirect(`/admin/drops/${id}?saved=1`);
 }
 
-export default async function EditDrop({ params, searchParams }: { params: { id: string }; searchParams: { saved?: string } }) {
+export default async function EditDrop({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { saved?: string };
+}) {
   const drop = await db.drop.findUnique({
     where: { id: params.id },
     include: { products: { orderBy: { position: 'asc' } } },
@@ -37,36 +46,67 @@ export default async function EditDrop({ params, searchParams }: { params: { id:
   if (!drop) notFound();
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center gap-4">
-        <Link href="/admin/drops" className="text-muted hover:text-white text-xs">← Drops</Link>
-        <h1 className="display text-4xl">{drop.name}</h1>
-        {searchParams.saved && <span className="pill bg-success/20 text-success">✓ Salvato</span>}
+    <>
+      <Link href="/admin/drops" className="admin-back">
+        <ArrowLeft size={14} /> Drops
+      </Link>
+
+      <div className="admin-page-head">
+        <h1 className="admin-page-head__title">{drop.name}</h1>
+        <div className="admin-page-head__actions">
+          {searchParams.saved && (
+            <span className="admin-pill admin-pill--ok">✓ Salvato</span>
+          )}
+        </div>
       </div>
 
-      <form action={updateDrop} className="grid gap-4 md:grid-cols-2 card p-6">
+      <form action={updateDrop} className="admin-card admin-form-grid">
         <input type="hidden" name="id" value={drop.id} />
 
         <Field label="Nome">
-          <input name="name" defaultValue={drop.name} required className="input" />
+          <input
+            name="name"
+            defaultValue={drop.name}
+            required
+            className="admin-input"
+          />
         </Field>
         <Field label="Tagline">
-          <input name="tagline" defaultValue={drop.tagline ?? ''} className="input" />
+          <input
+            name="tagline"
+            defaultValue={drop.tagline ?? ''}
+            className="admin-input"
+          />
         </Field>
 
         <Field label="Hero Image URL" wide>
-          <input name="heroImage" defaultValue={drop.heroImage ?? ''} className="input" placeholder="https://..." />
+          <input
+            name="heroImage"
+            defaultValue={drop.heroImage ?? ''}
+            className="admin-input"
+            placeholder="https://..."
+          />
         </Field>
         <Field label="Hero Video URL" wide>
-          <input name="heroVideo" defaultValue={drop.heroVideo ?? ''} className="input" placeholder="https://..." />
+          <input
+            name="heroVideo"
+            defaultValue={drop.heroVideo ?? ''}
+            className="admin-input"
+            placeholder="https://..."
+          />
         </Field>
 
         <Field label="Descrizione" wide>
-          <textarea name="description" defaultValue={drop.description ?? ''} rows={5} className="input" />
+          <textarea
+            name="description"
+            defaultValue={drop.description ?? ''}
+            rows={5}
+            className="admin-textarea"
+          />
         </Field>
 
         <Field label="Status">
-          <select name="status" defaultValue={drop.status} className="input">
+          <select name="status" defaultValue={drop.status} className="admin-select">
             <option value="upcoming">Upcoming</option>
             <option value="live">Live</option>
             <option value="sold_out">Sold out</option>
@@ -74,7 +114,11 @@ export default async function EditDrop({ params, searchParams }: { params: { id:
           </select>
         </Field>
         <Field label="Access">
-          <select name="accessType" defaultValue={drop.accessType} className="input">
+          <select
+            name="accessType"
+            defaultValue={drop.accessType}
+            className="admin-select"
+          >
             <option value="public">Public</option>
             <option value="password">Password</option>
             <option value="members_only">Members only</option>
@@ -82,52 +126,119 @@ export default async function EditDrop({ params, searchParams }: { params: { id:
         </Field>
 
         <Field label="Password (se access=password)">
-          <input name="password" defaultValue={drop.password ?? ''} className="input" />
+          <input
+            name="password"
+            defaultValue={drop.password ?? ''}
+            className="admin-input"
+          />
         </Field>
         <Field label="Parte il">
           <input
             name="startsAt"
             type="datetime-local"
-            defaultValue={drop.startsAt ? drop.startsAt.toISOString().slice(0, 16) : ''}
-            className="input"
+            defaultValue={
+              drop.startsAt ? drop.startsAt.toISOString().slice(0, 16) : ''
+            }
+            className="admin-input"
           />
         </Field>
 
-        <label className="flex items-center gap-2 text-sm md:col-span-2">
-          <input type="checkbox" name="featured" defaultChecked={drop.featured} /> Featured in homepage
+        <label className="admin-checkbox admin-field--wide">
+          <input
+            type="checkbox"
+            name="featured"
+            defaultChecked={drop.featured}
+          />
+          Featured in homepage
         </label>
 
-        <div className="md:col-span-2">
-          <button className="btn-primary h-12 px-6">Salva</button>
+        <div className="admin-field--wide">
+          <button type="submit" className="btn primary">
+            Salva
+          </button>
         </div>
       </form>
 
-      {/* PRODOTTI */}
-      <div className="flex items-center justify-between mt-4">
-        <h2 className="display text-3xl">PRODOTTI</h2>
-        <Link href={`/admin/products?dropId=${drop.id}`} className="btn-ghost px-3 py-2 text-xs">Gestisci prodotti</Link>
+      <div className="admin-section-head">
+        <h2>Prodotti</h2>
+        <Link
+          href={`/admin/products?dropId=${drop.id}`}
+          className="btn ghost sm"
+        >
+          Gestisci prodotti
+        </Link>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="admin-grid-2">
         {drop.products.map((p) => (
-          <Link key={p.id} href={`/admin/products/${p.id}`} className="card p-4 hover:border-accent/40">
-            <div className="flex items-center justify-between">
-              <p className="font-semibold">{p.name}</p>
-              <p className="text-accent tabular-nums">{formatPrice(p.priceCents)}</p>
+          <Link
+            key={p.id}
+            href={`/admin/products/${p.id}`}
+            className="admin-card is-link"
+            style={{ textDecoration: 'none' }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 10,
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                  fontSize: 15,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {p.name}
+              </p>
+              <p
+                style={{
+                  color: 'var(--accent)',
+                  fontVariantNumeric: 'tabular-nums',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                }}
+              >
+                {formatPrice(p.priceCents)}
+              </p>
             </div>
-            <p className="text-xs text-muted mt-1">/{p.slug}</p>
+            <p
+              style={{
+                fontSize: 12.5,
+                color: 'var(--fg-mute)',
+                marginTop: 6,
+              }}
+            >
+              /{p.slug}
+            </p>
           </Link>
         ))}
-        {drop.products.length === 0 && <p className="text-muted text-sm">Nessun prodotto. Aggiungili dalla sezione prodotti.</p>}
+        {drop.products.length === 0 && (
+          <div className="admin-empty" style={{ gridColumn: '1 / -1' }}>
+            Nessun prodotto. Aggiungili dalla sezione prodotti.
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 
-function Field({ label, children, wide }: { label: string; children: React.ReactNode; wide?: boolean }) {
+function Field({
+  label,
+  children,
+  wide,
+}: {
+  label: string;
+  children: React.ReactNode;
+  wide?: boolean;
+}) {
   return (
-    <label className={`flex flex-col gap-1.5 ${wide ? 'md:col-span-2' : ''}`}>
-      <span className="text-[10px] uppercase tracking-widest text-muted">{label}</span>
+    <label className={'admin-field' + (wide ? ' admin-field--wide' : '')}>
+      <span className="admin-field__label">{label}</span>
       {children}
     </label>
   );

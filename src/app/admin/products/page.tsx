@@ -26,7 +26,11 @@ async function createProduct(formData: FormData) {
   redirect(`/admin/products/${product.id}`);
 }
 
-export default async function AdminProducts({ searchParams }: { searchParams: { dropId?: string } }) {
+export default async function AdminProducts({
+  searchParams,
+}: {
+  searchParams: { dropId?: string };
+}) {
   const [products, drops] = await Promise.all([
     db.product.findMany({
       orderBy: { createdAt: 'desc' },
@@ -37,38 +41,72 @@ export default async function AdminProducts({ searchParams }: { searchParams: { 
   ]);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="display text-5xl">PRODOTTI</h1>
-        <form action={createProduct} className="flex gap-2">
-          <select name="dropId" required defaultValue={searchParams.dropId ?? ''} className="input w-48">
+    <>
+      <div className="admin-page-head">
+        <h1 className="admin-page-head__title">Prodotti</h1>
+        <form action={createProduct} className="admin-page-head__actions">
+          <select
+            name="dropId"
+            required
+            defaultValue={searchParams.dropId ?? ''}
+            className="admin-select"
+            style={{ width: 200 }}
+          >
             <option value="">Seleziona drop…</option>
             {drops.map((d) => (
-              <option key={d.id} value={d.id}>{d.name}</option>
+              <option key={d.id} value={d.id}>
+                {d.name}
+              </option>
             ))}
           </select>
-          <input name="name" placeholder="Nome prodotto" className="input w-64" required />
-          <button className="btn-primary px-4"><Plus size={14} /> Crea</button>
+          <input
+            name="name"
+            placeholder="Nome prodotto"
+            required
+            className="admin-input"
+            style={{ width: 240 }}
+          />
+          <button type="submit" className="btn primary">
+            <Plus size={14} /> Crea
+          </button>
         </form>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="admin-list">
         {products.map((p) => {
           const stock = p.variants.reduce((s, v) => s + v.stock, 0);
           return (
-            <Link key={p.id} href={`/admin/products/${p.id}`} className="card p-4 flex items-center gap-4 hover:border-accent/40">
-              <div className="flex-1">
-                <p className="font-semibold">{p.name}</p>
-                <p className="text-xs text-muted">
+            <Link
+              key={p.id}
+              href={`/admin/products/${p.id}`}
+              className="admin-list-row"
+              style={{ textDecoration: 'none' }}
+            >
+              <div className="admin-list-row__main">
+                <p className="admin-list-row__title">{p.name}</p>
+                <p className="admin-list-row__meta">
                   {p.drop.name} · {stock} pz totali · /{p.slug}
                 </p>
               </div>
-              <p className="text-accent tabular-nums">{formatPrice(p.priceCents)}</p>
+              <p
+                style={{
+                  color: 'var(--accent)',
+                  fontVariantNumeric: 'tabular-nums',
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                  fontSize: 16,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {formatPrice(p.priceCents)}
+              </p>
             </Link>
           );
         })}
-        {products.length === 0 && <p className="text-muted">Nessun prodotto.</p>}
+        {products.length === 0 && (
+          <div className="admin-empty">Nessun prodotto.</div>
+        )}
       </div>
-    </div>
+    </>
   );
 }

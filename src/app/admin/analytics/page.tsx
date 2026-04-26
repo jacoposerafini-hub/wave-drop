@@ -5,7 +5,10 @@ export const dynamic = 'force-dynamic';
 
 export default async function AdminAnalytics() {
   const [orders, signups, drops] = await Promise.all([
-    db.order.findMany({ where: { status: { in: ['paid', 'shipped', 'delivered'] } }, include: { items: true } }),
+    db.order.findMany({
+      where: { status: { in: ['paid', 'shipped', 'delivered'] } },
+      include: { items: true },
+    }),
     db.notifySignup.count(),
     db.drop.count(),
   ]);
@@ -13,9 +16,10 @@ export default async function AdminAnalytics() {
   const totalRevenue = orders.reduce((s, o) => s + o.totalCents, 0);
   const orderCount = orders.length;
   const avgOrder = orderCount ? Math.round(totalRevenue / orderCount) : 0;
-  const unitsSold = orders.flatMap((o) => o.items).reduce((s, i) => s + i.qty, 0);
+  const unitsSold = orders
+    .flatMap((o) => o.items)
+    .reduce((s, i) => s + i.qty, 0);
 
-  // Top prodotti
   const productMap = new Map<string, { name: string; units: number; revenue: number }>();
   for (const order of orders) {
     for (const item of order.items) {
@@ -26,55 +30,91 @@ export default async function AdminAnalytics() {
       productMap.set(key, existing);
     }
   }
-  const topProducts = Array.from(productMap.values()).sort((a, b) => b.revenue - a.revenue).slice(0, 5);
+  const topProducts = Array.from(productMap.values())
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 5);
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="display text-5xl">ANALYTICS</h1>
+    <>
+      <div className="admin-page-head">
+        <h1 className="admin-page-head__title">Analytics</h1>
+      </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="admin-kpi-grid">
         <Kpi label="Revenue" value={formatPrice(totalRevenue)} />
         <Kpi label="Ordini" value={orderCount.toString()} />
         <Kpi label="Avg order" value={formatPrice(avgOrder)} />
         <Kpi label="Pezzi venduti" value={unitsSold.toString()} />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        <div className="card p-6">
-          <p className="pill text-muted mb-4">Top prodotti</p>
+      <div className="admin-grid-2">
+        <div className="admin-card">
+          <div className="admin-kpi__label" style={{ marginBottom: 16 }}>
+            Top prodotti
+          </div>
           {topProducts.length === 0 ? (
-            <p className="text-muted text-sm">Nessuna vendita ancora.</p>
+            <p style={{ color: 'var(--fg-mute)', fontSize: 14 }}>
+              Nessuna vendita ancora.
+            </p>
           ) : (
-            <div className="flex flex-col gap-2">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {topProducts.map((p, i) => (
-                <div key={p.name} className="flex items-center gap-3">
-                  <span className="display text-xl text-muted w-6">{i + 1}</span>
-                  <p className="flex-1 text-sm">{p.name}</p>
-                  <p className="text-xs text-muted">{p.units} pz</p>
-                  <p className="display tabular-nums text-accent">{formatPrice(p.revenue)}</p>
+                <div
+                  key={p.name}
+                  style={{ display: 'flex', alignItems: 'center', gap: 14 }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: 600,
+                      fontSize: 22,
+                      color: 'var(--fg-mute)',
+                      width: 26,
+                      letterSpacing: '-0.03em',
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <p style={{ flex: 1, fontSize: 14 }}>{p.name}</p>
+                  <p style={{ fontSize: 12, color: 'var(--fg-mute)' }}>
+                    {p.units} pz
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: 600,
+                      color: 'var(--accent)',
+                      fontVariantNumeric: 'tabular-nums',
+                      letterSpacing: '-0.025em',
+                    }}
+                  >
+                    {formatPrice(p.revenue)}
+                  </p>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        <div className="card p-6">
-          <p className="pill text-muted mb-4">Database</p>
-          <div className="grid grid-cols-2 gap-4">
+        <div className="admin-card">
+          <div className="admin-kpi__label" style={{ marginBottom: 16 }}>
+            Database
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
             <Stat label="Iscritti notify" value={signups} />
             <Stat label="Drop totali" value={drops} />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
 function Kpi({ label, value }: { label: string; value: string }) {
   return (
-    <div className="card p-5">
-      <p className="pill text-muted">{label}</p>
-      <p className="display mt-3 text-4xl">{value}</p>
+    <div className="admin-card admin-kpi">
+      <div className="admin-kpi__label">{label}</div>
+      <div className="admin-kpi__value">{value}</div>
     </div>
   );
 }
@@ -82,8 +122,21 @@ function Kpi({ label, value }: { label: string; value: string }) {
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div>
-      <p className="display text-3xl text-accent">{value}</p>
-      <p className="mt-1 text-xs text-muted">{label}</p>
+      <p
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontWeight: 600,
+          fontSize: 30,
+          color: 'var(--accent)',
+          letterSpacing: '-0.03em',
+          fontVariantNumeric: 'tabular-nums',
+        }}
+      >
+        {value}
+      </p>
+      <p style={{ marginTop: 6, fontSize: 12, color: 'var(--fg-mute)' }}>
+        {label}
+      </p>
     </div>
   );
 }

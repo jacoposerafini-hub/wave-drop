@@ -8,6 +8,7 @@ import Marquee from '@/components/Marquee';
 import CartDrawer from '@/components/CartDrawer';
 import CookieBanner from '@/components/CookieBanner';
 import EventBanner from '@/components/EventBanner';
+import SiteChrome from '@/components/SiteChrome';
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -189,13 +190,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="wash" />
         <div className="grain" />
-        <Navbar />
-        <Marquee />
+        <SiteChrome>
+          <Navbar />
+          <Marquee />
+        </SiteChrome>
         {children}
-        <Footer />
-        <CartDrawer />
-        <CookieBanner />
-        <EventBanner />
+        <SiteChrome>
+          <Footer />
+          <CartDrawer />
+          <CookieBanner />
+          <EventBanner />
+        </SiteChrome>
         <Script
           src="https://app.lemonsqueezy.com/js/lemon.js"
           strategy="afterInteractive"

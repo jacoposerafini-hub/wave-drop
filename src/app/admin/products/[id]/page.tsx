@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { revalidatePath } from 'next/cache';
+import { ArrowLeft } from 'lucide-react';
 import { db } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
@@ -9,7 +10,9 @@ async function updateProduct(formData: FormData) {
   'use server';
   const id = String(formData.get('id'));
   const imagesRaw = String(formData.get('images') ?? '').trim();
-  const images = imagesRaw ? imagesRaw.split('\n').map((l) => l.trim()).filter(Boolean) : [];
+  const images = imagesRaw
+    ? imagesRaw.split('\n').map((l) => l.trim()).filter(Boolean)
+    : [];
   await db.product.update({
     where: { id },
     data: {
@@ -51,7 +54,13 @@ async function deleteVariant(formData: FormData) {
   revalidatePath(`/admin/products/${productId}`);
 }
 
-export default async function EditProduct({ params, searchParams }: { params: { id: string }; searchParams: { saved?: string } }) {
+export default async function EditProduct({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { saved?: string };
+}) {
   const product = await db.product.findUnique({
     where: { id: params.id },
     include: { variants: { orderBy: { size: 'asc' } }, drop: true },
@@ -59,59 +68,133 @@ export default async function EditProduct({ params, searchParams }: { params: { 
   if (!product) notFound();
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center gap-4">
-        <Link href="/admin/products" className="text-muted hover:text-white text-xs">← Prodotti</Link>
-        <h1 className="display text-4xl">{product.name}</h1>
-        {searchParams.saved && <span className="pill bg-success/20 text-success">✓ Salvato</span>}
+    <>
+      <Link href="/admin/products" className="admin-back">
+        <ArrowLeft size={14} /> Prodotti
+      </Link>
+
+      <div className="admin-page-head">
+        <h1 className="admin-page-head__title">{product.name}</h1>
+        <div className="admin-page-head__actions">
+          {searchParams.saved && (
+            <span className="admin-pill admin-pill--ok">✓ Salvato</span>
+          )}
+          <Link
+            href={`/product/${product.slug}`}
+            target="_blank"
+            rel="noreferrer"
+            className="btn ghost sm"
+          >
+            Anteprima
+          </Link>
+        </div>
       </div>
 
-      <form action={updateProduct} className="grid gap-4 md:grid-cols-2 card p-6">
+      <form action={updateProduct} className="admin-card admin-form-grid">
         <input type="hidden" name="id" value={product.id} />
         <Field label="Nome">
-          <input name="name" defaultValue={product.name} required className="input" />
+          <input
+            name="name"
+            defaultValue={product.name}
+            required
+            className="admin-input"
+          />
         </Field>
         <Field label="Prezzo (EUR)">
-          <input name="priceEur" type="number" step="0.01" defaultValue={(product.priceCents / 100).toFixed(2)} required className="input" />
+          <input
+            name="priceEur"
+            type="number"
+            step="0.01"
+            defaultValue={(product.priceCents / 100).toFixed(2)}
+            required
+            className="admin-input"
+          />
         </Field>
         <Field label="Descrizione" wide>
-          <textarea name="description" defaultValue={product.description} rows={4} className="input" />
+          <textarea
+            name="description"
+            defaultValue={product.description}
+            rows={4}
+            className="admin-textarea"
+          />
         </Field>
         <Field label="Composizione">
-          <input name="composition" defaultValue={product.composition ?? ''} className="input" />
+          <input
+            name="composition"
+            defaultValue={product.composition ?? ''}
+            className="admin-input"
+          />
         </Field>
         <Field label="Vestibilità">
-          <input name="fit" defaultValue={product.fit ?? ''} className="input" />
+          <input
+            name="fit"
+            defaultValue={product.fit ?? ''}
+            className="admin-input"
+          />
         </Field>
         <Field label="Immagini (una URL per riga)" wide>
-          <textarea name="images" defaultValue={product.images.join('\n')} rows={4} className="input font-mono text-xs" />
+          <textarea
+            name="images"
+            defaultValue={product.images.join('\n')}
+            rows={4}
+            className="admin-textarea"
+          />
         </Field>
         <Field label="Ordine">
-          <input name="position" type="number" defaultValue={product.position} className="input" />
+          <input
+            name="position"
+            type="number"
+            defaultValue={product.position}
+            className="admin-input"
+          />
         </Field>
-        <div className="md:col-span-2">
-          <button className="btn-primary h-12 px-6">Salva</button>
+        <div className="admin-field--wide">
+          <button type="submit" className="btn primary">
+            Salva
+          </button>
         </div>
       </form>
 
-      <div className="flex flex-col gap-3">
-        <h2 className="display text-3xl">VARIANTI / STOCK</h2>
+      <div className="admin-section-head">
+        <h2>Varianti / Stock</h2>
+      </div>
+
+      <div className="admin-list">
         {product.variants.map((v) => (
-          <div key={v.id} className="card p-4 flex flex-col gap-3">
+          <div
+            key={v.id}
+            className="admin-card"
+            style={{ display: 'flex', flexDirection: 'column', gap: 12 }}
+          >
             <form
               action={upsertVariant}
-              className="flex flex-wrap items-center gap-2"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 10,
+                alignItems: 'center',
+              }}
             >
               <input type="hidden" name="productId" value={product.id} />
               <input type="hidden" name="size" value={v.size} />
-              <p className="font-semibold w-16">{v.size}</p>
+              <p
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                  fontSize: 16,
+                  width: 60,
+                }}
+              >
+                {v.size}
+              </p>
               <input
                 type="number"
                 name="stock"
                 defaultValue={v.stock}
-                className="input w-24"
+                className="admin-input"
+                style={{ width: 100 }}
               />
-              <span className="text-xs text-muted">
+              <span style={{ fontSize: 12, color: 'var(--fg-mute)' }}>
                 stock (riservati: {v.reserved})
               </span>
               <input
@@ -119,41 +202,85 @@ export default async function EditProduct({ params, searchParams }: { params: { 
                 name="checkoutUrl"
                 defaultValue={v.checkoutUrl ?? ''}
                 placeholder="Checkout URL (Payhip: https://payhip.com/b/XXXX)"
-                className="input flex-1 min-w-[280px] font-mono text-xs"
+                className="admin-input"
+                style={{ flex: 1, minWidth: 260, fontFamily: 'var(--font-mono)', fontSize: 12.5 }}
               />
-              <button className="btn-ghost px-3 py-1.5 text-xs">Aggiorna</button>
+              <button type="submit" className="btn ghost sm">
+                Aggiorna
+              </button>
             </form>
-            <form action={deleteVariant} className="self-end">
+            <form action={deleteVariant} style={{ alignSelf: 'flex-end' }}>
               <input type="hidden" name="id" value={v.id} />
               <input type="hidden" name="productId" value={product.id} />
-              <button className="text-danger text-xs hover:underline">
+              <button
+                type="submit"
+                style={{
+                  fontSize: 12,
+                  color: 'var(--danger)',
+                  background: 'transparent',
+                  textDecoration: 'underline',
+                }}
+              >
                 Elimina taglia
               </button>
             </form>
           </div>
         ))}
 
-        <form action={upsertVariant} className="card p-4 flex flex-wrap items-center gap-2">
+        <form
+          action={upsertVariant}
+          className="admin-card"
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 10,
+            alignItems: 'center',
+          }}
+        >
           <input type="hidden" name="productId" value={product.id} />
-          <input name="size" placeholder="Taglia (es. M)" className="input w-32" required />
-          <input name="stock" type="number" placeholder="Stock" className="input w-32" required />
+          <input
+            name="size"
+            placeholder="Taglia (es. M)"
+            className="admin-input"
+            style={{ width: 130 }}
+            required
+          />
+          <input
+            name="stock"
+            type="number"
+            placeholder="Stock"
+            className="admin-input"
+            style={{ width: 110 }}
+            required
+          />
           <input
             name="checkoutUrl"
             type="url"
             placeholder="Checkout URL (opzionale)"
-            className="input flex-1 min-w-[260px] font-mono text-xs"
+            className="admin-input"
+            style={{ flex: 1, minWidth: 240, fontFamily: 'var(--font-mono)', fontSize: 12.5 }}
           />
-          <button className="btn-primary px-4 py-2">+ Aggiungi taglia</button>
+          <button type="submit" className="btn primary sm">
+            + Aggiungi taglia
+          </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }
 
-function Field({ label, children, wide }: { label: string; children: React.ReactNode; wide?: boolean }) {
+function Field({
+  label,
+  children,
+  wide,
+}: {
+  label: string;
+  children: React.ReactNode;
+  wide?: boolean;
+}) {
   return (
-    <label className={`flex flex-col gap-1.5 ${wide ? 'md:col-span-2' : ''}`}>
-      <span className="text-[10px] uppercase tracking-widest text-muted">{label}</span>
+    <label className={'admin-field' + (wide ? ' admin-field--wide' : '')}>
+      <span className="admin-field__label">{label}</span>
       {children}
     </label>
   );

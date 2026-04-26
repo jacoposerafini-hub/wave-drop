@@ -1,7 +1,16 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { isAdmin, logoutAdmin } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { LogOut } from 'lucide-react';
+import { isAdmin, logoutAdmin } from '@/lib/auth';
+import AdminNavLink from './AdminNavLink';
+
+const NAV = [
+  { href: '/admin/drops', label: 'Drops' },
+  { href: '/admin/products', label: 'Prodotti' },
+  { href: '/admin/orders', label: 'Ordini' },
+  { href: '/admin/analytics', label: 'Analytics' },
+];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = headers().get('x-pathname') || '';
@@ -17,17 +26,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (isLoginRoute) return <>{children}</>;
 
   return (
-    <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-10">
-      <nav className="mb-10 flex flex-wrap items-center gap-4 border-b border-border pb-4 text-xs uppercase tracking-widest">
-        <Link href="/admin/drops" className="text-white hover:text-accent">Drops</Link>
-        <Link href="/admin/products" className="text-muted hover:text-white">Prodotti</Link>
-        <Link href="/admin/orders" className="text-muted hover:text-white">Ordini</Link>
-        <Link href="/admin/analytics" className="text-muted hover:text-white">Analytics</Link>
-        <form action={logout} className="ml-auto">
-          <button className="text-muted hover:text-danger">Logout</button>
+    <main className="page-enter admin-shell">
+      <nav className="admin-nav">
+        {NAV.map((n) => (
+          <AdminNavLink key={n.href} href={n.href} label={n.label} />
+        ))}
+        <form action={logout} className="admin-nav__logout-form" style={{ marginLeft: 'auto' }}>
+          <button type="submit" className="admin-nav__logout">
+            <LogOut size={14} style={{ marginRight: 4 }} />
+            Logout
+          </button>
         </form>
       </nav>
       {children}
-    </div>
+    </main>
   );
 }
