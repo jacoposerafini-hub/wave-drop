@@ -1179,3 +1179,196 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: -0.005em;
 }
 .account-field input::placeholder { color: var(--fg-mute); }
+
+/* NoDropState — explicit hero variant */
+.hero--nodrop { overflow: visible; padding-right: 0; padding-left: 0; }
+.hero__grid--nodrop {
+  grid-template-columns: minmax(440px, 0.8fr) 1.2fr;
+  padding-left: var(--pad);
+  gap: 24px;
+}
+.hero__aside--nodrop { padding-left: 0; }
+.countdown-hero--nodrop { min-height: 540px; border-radius: 0; }
+
+/* Mobile burger button */
+.nav__burger {
+  display: none;
+  width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-2);
+  color: var(--fg);
+  transition: all 200ms var(--ease);
+}
+.nav__burger:hover { border-color: var(--line-3); background: rgba(255,255,255,0.03); }
+
+.nav__mobile {
+  position: fixed;
+  top: 72px; left: 0; right: 0; bottom: 0;
+  z-index: 99;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: saturate(180%) blur(28px);
+  -webkit-backdrop-filter: saturate(180%) blur(28px);
+  padding: 24px var(--pad) 40px;
+  display: flex; flex-direction: column;
+  animation: fade 220ms var(--ease);
+}
+.nav__mobile-links {
+  display: flex; flex-direction: column;
+  gap: 6px;
+}
+.nav__mobile-links a {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  padding: 14px 0;
+  color: var(--fg-dim);
+  border-bottom: 1px solid var(--line);
+  transition: color 200ms var(--ease);
+}
+.nav__mobile-links a:hover,
+.nav__mobile-links a.active { color: var(--fg); }
+.nav__mobile-links a.active { color: var(--accent); }
+
+/* ============================================
+   MOBILE — comprehensive responsive overhaul
+   ============================================ */
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+
+  /* Nav: hide desktop links, show burger */
+  .nav__inner { grid-template-columns: auto 1fr auto; height: 64px; }
+  .nav__links { display: none; }
+  .nav__right { gap: 8px; }
+  .nav__burger { display: inline-flex; }
+  .hide-sm-only { display: none !important; }
+  .nav__cart { width: 40px; height: 40px; }
+
+  /* Marquee tighter */
+  .ship-banner__inner { padding: 10px 16px; font-size: 11px; gap: 8px; }
+
+  /* Hero — single column, smaller padding */
+  .hero { padding: 40px var(--pad) 32px; }
+  .hero__grid { gap: 32px; }
+  .hero--nodrop { padding: 32px 0 24px; }
+  .hero__grid--nodrop {
+    grid-template-columns: 1fr;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+    gap: 28px;
+  }
+  .hero__aside--nodrop { padding-left: 0; }
+  .countdown-hero--nodrop { min-height: 320px; border-radius: var(--r-lg); }
+  .hero__title { font-size: clamp(44px, 12vw, 64px) !important; }
+  .hero__copy { font-size: 15px; max-width: 100%; }
+  .hero__meta { gap: 8px; margin-top: 20px; }
+
+  /* Display titles smaller */
+  .display { font-size: clamp(56px, 16vw, 80px) !important; }
+
+  /* Section heads tighter */
+  .section-head { padding: 48px 0 24px; gap: 16px; }
+  .section-head__l { font-size: clamp(32px, 9vw, 48px); }
+
+  /* Product grid: 1 col on phone */
+  .product-grid { grid-template-columns: 1fr; gap: 14px; }
+  .product__body { padding: 16px 18px 4px; }
+  .product__sub { padding: 0 18px 16px; }
+
+  /* Hero stack — single col */
+  .hero-stack { grid-template-columns: 1fr; gap: 14px; padding-top: 24px; }
+  .hero-stack__left { grid-template-columns: 1fr; }
+  .hero-stack__left .media:first-child { grid-row: auto; }
+
+  /* Editorial — single col */
+  .editorial { padding: 48px 0 16px; gap: 18px; }
+  .editorial h3 { font-size: clamp(28px, 7vw, 40px); }
+  .editorial__img-b { margin-top: 0; }
+
+  /* Countdown card */
+  .countdown { padding: 20px; }
+  .countdown__grid { gap: 6px; }
+  .countdown__cell { padding: 16px 4px 12px; }
+  .countdown__num { font-size: 32px; }
+  .countdown-hero .countdown { margin: 14px; }
+
+  /* Footer — stack */
+  .footer { margin-top: 64px; padding: 48px 0 24px; }
+  .footer__grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer__big { font-size: clamp(32px, 9vw, 44px); }
+  .footer__bottom {
+    flex-direction: column; align-items: flex-start; gap: 14px;
+    font-size: 12px;
+  }
+  .footer__bottom a:first-child { margin-left: 0; }
+  .footer__bottom a { margin-left: 0; margin-right: 18px; }
+
+  /* About */
+  .about { padding: 48px 0; gap: 32px; }
+  .about__headline { font-size: clamp(48px, 14vw, 72px); }
+
+  /* Stats */
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat { padding: 18px 14px; }
+  .stat__v { font-size: 26px; }
+
+  /* Contact */
+  .contact-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
+  .contact-card { padding: 24px; }
+
+  /* Account */
+  .account-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; padding-bottom: 40px; }
+  .account-card { padding: 24px; }
+
+  /* Page lead */
+  .page__lead { padding: 32px 0 16px; }
+
+  /* Drawer — full width on mobile */
+  .drawer {
+    top: 0; right: 0; bottom: 0;
+    width: 100%; max-width: 100%;
+    border-radius: 0;
+    border: 0;
+  }
+  .drawer__head, .drawer__foot { padding: 18px 18px; }
+  .drawer__body { padding: 14px 18px; }
+
+  /* Modal */
+  .modal-backdrop { padding: 0; }
+  .modal { border-radius: 0; max-height: 100vh; height: 100vh; }
+  .modal__body { padding: 24px; }
+  .modal__media { min-height: 280px; }
+
+  /* Cart shell */
+  .cart-shell { margin: 24px 14px 56px; max-width: none; }
+  .cart-shell__head, .cart-shell__foot { padding: 18px; }
+  .cart-shell__body { padding: 8px 18px; }
+
+  /* Buttons */
+  .btn { padding: 12px 20px; font-size: 13.5px; }
+  .row { gap: 8px; }
+
+  /* Cookie banner */
+  .cookie-banner { padding: 14px 16px; gap: 10px; }
+  .cookie-banner__text p { font-size: 12.5px; }
+
+  /* Archive */
+  .archive__row { padding: 18px 12px; gap: 12px; }
+  .archive__name { font-size: clamp(18px, 5vw, 24px); }
+
+  /* Lookbook */
+  .lookbook { grid-template-columns: 1fr; gap: 12px; }
+}
+
+@media (max-width: 420px) {
+  :root { --pad: 16px; }
+  .hero__title { font-size: clamp(40px, 13vw, 56px) !important; }
+  .display { font-size: clamp(48px, 17vw, 68px) !important; }
+  .countdown__num { font-size: 26px; }
+  .countdown__cell { padding: 12px 2px 10px; }
+  .countdown__unit { font-size: 9px; letter-spacing: 0.14em; }
+  .nav__logo { font-size: 17px; }
+  .signup input { padding: 10px 14px; font-size: 13.5px; }
+  .signup button { padding: 0 16px; font-size: 12.5px; }
+}

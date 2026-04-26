@@ -174,18 +174,8 @@ function NoDropState() {
   const target = new Date('2026-05-17T22:22:00');
   return (
     <main className="page-enter">
-      <section
-        className="hero"
-        style={{ overflow: 'visible', paddingRight: 0, paddingLeft: 0 }}
-      >
-        <div
-          className="hero__grid"
-          style={{
-            gridTemplateColumns: 'minmax(440px, 0.8fr) 1.2fr',
-            paddingLeft: 'var(--pad)',
-            gap: 24,
-          }}
-        >
+      <section className="hero hero--nodrop">
+        <div className="hero__grid hero__grid--nodrop">
           <div>
             <div className="eyebrow">
               <span className="dot" />
@@ -214,14 +204,8 @@ function NoDropState() {
               <NewsletterForm />
             </div>
           </div>
-          <aside
-            className="hero__aside"
-            style={{ paddingLeft: 0 }}
-          >
-            <div
-              className="countdown-hero"
-              style={{ minHeight: 540, borderRadius: 0 }}
-            >
+          <aside className="hero__aside hero__aside--nodrop">
+            <div className="countdown-hero countdown-hero--nodrop">
               <div
                 className="countdown-hero__bg"
                 data-label="Teaser · Drop 001"
