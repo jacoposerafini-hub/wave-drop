@@ -51,7 +51,7 @@ model Variant {
   size             String
   stock            Int         @default(0)
   reserved         Int         @default(0)
-  lemonSqueezyUrl  String?
+  checkoutUrl      String?
   orderItems       OrderItem[]
   @@unique([productId, size])
 }

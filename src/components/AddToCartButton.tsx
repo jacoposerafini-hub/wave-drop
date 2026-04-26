@@ -10,14 +10,22 @@ interface Variant {
   size: string;
   stock: number;
   reserved: number;
-  lemonSqueezyUrl?: string | null;
+  checkoutUrl?: string | null;
 }
 
 declare global {
   interface Window {
     LemonSqueezy?: { Url: { Open: (url: string) => void } };
     createLemonSqueezy?: () => void;
+    Payhip?: { Checkout?: { open?: (opts: { product: string }) => void } };
   }
+}
+
+// Try to extract a Payhip product slug from a URL like
+// https://payhip.com/b/ABC123 → ABC123
+function payhipProductFromUrl(url: string): string | null {
+  const m = url.match(/payhip\.com\/b\/([A-Za-z0-9_-]+)/);
+  return m ? m[1] : null;
 }
 
 type MsgType = 'ok' | 'err' | null;
@@ -35,7 +43,9 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
   const selVariant = variants.find((v) => v.id === selected);
   const available = selVariant ? selVariant.stock - selVariant.reserved : 0;
   const allSoldOut = variants.every((v) => v.stock - v.reserved <= 0);
-  const lsUrl = selVariant?.lemonSqueezyUrl;
+  const checkoutUrl = selVariant?.checkoutUrl ?? null;
+  const isPayhip = !!checkoutUrl && /payhip\.com/.test(checkoutUrl);
+  const isLemonSqueezy = !!checkoutUrl && /lemonsqueezy\.com/.test(checkoutUrl);
 
   // Initialize Lemon Squeezy overlay once script is loaded
   useEffect(() => {
@@ -52,13 +62,21 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
       setTimeout(() => setShake(false), 400);
       return;
     }
-    if (!lsUrl) return;
-    if (window.LemonSqueezy?.Url?.Open) {
-      window.LemonSqueezy.Url.Open(lsUrl);
-    } else {
-      // Fallback: open in new tab if overlay script not ready
-      window.open(lsUrl, '_blank', 'noopener,noreferrer');
+    if (!checkoutUrl) return;
+
+    if (isPayhip) {
+      const slug = payhipProductFromUrl(checkoutUrl);
+      if (slug && window.Payhip?.Checkout?.open) {
+        window.Payhip.Checkout.open({ product: slug });
+        return;
+      }
     }
+    if (isLemonSqueezy && window.LemonSqueezy?.Url?.Open) {
+      window.LemonSqueezy.Url.Open(checkoutUrl);
+      return;
+    }
+    // Fallback: open in new tab
+    window.open(checkoutUrl, '_blank', 'noopener,noreferrer');
   }
 
   function add() {
@@ -124,12 +142,17 @@ export default function AddToCartButton({ variants }: { variants: Variant[] }) {
         </div>
       </div>
 
-      {lsUrl ? (
+      {checkoutUrl ? (
         <button
           onClick={buyNow}
           disabled={allSoldOut}
-          className="btn primary lemonsqueezy-button"
-          data-lemonsqueezy-url={lsUrl}
+          className={
+            'btn primary' +
+            (isPayhip ? ' payhip-buy-button' : '') +
+            (isLemonSqueezy ? ' lemonsqueezy-button' : '')
+          }
+          data-product={isPayhip ? payhipProductFromUrl(checkoutUrl) ?? undefined : undefined}
+          data-lemonsqueezy-url={isLemonSqueezy ? checkoutUrl : undefined}
           style={{
             width: '100%',
             opacity: allSoldOut ? 0.5 : 1,

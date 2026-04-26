@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       // Match via URL containing the LS UUID
       const matches = await db.variant.findMany({
         where: {
-          lemonSqueezyUrl: { contains: variantId },
+          checkoutUrl: { contains: variantId },
         },
       });
       for (const m of matches) {

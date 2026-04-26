@@ -152,7 +152,7 @@ export default async function ProductPage({
               size: v.size,
               stock: v.stock,
               reserved: v.reserved,
-              lemonSqueezyUrl: v.lemonSqueezyUrl,
+              checkoutUrl: v.checkoutUrl,
             }))}
           />
 

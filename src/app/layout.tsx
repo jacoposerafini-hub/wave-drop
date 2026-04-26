@@ -200,6 +200,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://app.lemonsqueezy.com/js/lemon.js"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://payhip.com/payhip.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

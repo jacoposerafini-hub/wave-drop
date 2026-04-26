@@ -32,13 +32,13 @@ async function upsertVariant(formData: FormData) {
   const productId = String(formData.get('productId'));
   const size = String(formData.get('size') ?? '').trim().toUpperCase();
   const stock = Number(formData.get('stock') ?? 0);
-  const lemonSqueezyUrlRaw = String(formData.get('lemonSqueezyUrl') ?? '').trim();
-  const lemonSqueezyUrl = lemonSqueezyUrlRaw || null;
+  const checkoutUrlRaw = String(formData.get('checkoutUrl') ?? '').trim();
+  const checkoutUrl = checkoutUrlRaw || null;
   if (!size) return;
   await db.variant.upsert({
     where: { productId_size: { productId, size } },
-    create: { productId, size, stock, lemonSqueezyUrl },
-    update: { stock, lemonSqueezyUrl },
+    create: { productId, size, stock, checkoutUrl },
+    update: { stock, checkoutUrl },
   });
   revalidatePath(`/admin/products/${productId}`);
 }
@@ -116,9 +116,9 @@ export default async function EditProduct({ params, searchParams }: { params: { 
               </span>
               <input
                 type="url"
-                name="lemonSqueezyUrl"
-                defaultValue={v.lemonSqueezyUrl ?? ''}
-                placeholder="Lemon Squeezy URL (es. https://store.lemonsqueezy.com/buy/UUID)"
+                name="checkoutUrl"
+                defaultValue={v.checkoutUrl ?? ''}
+                placeholder="Checkout URL (Payhip: https://payhip.com/b/XXXX)"
                 className="input flex-1 min-w-[280px] font-mono text-xs"
               />
               <button className="btn-ghost px-3 py-1.5 text-xs">Aggiorna</button>
@@ -138,9 +138,9 @@ export default async function EditProduct({ params, searchParams }: { params: { 
           <input name="size" placeholder="Taglia (es. M)" className="input w-32" required />
           <input name="stock" type="number" placeholder="Stock" className="input w-32" required />
           <input
-            name="lemonSqueezyUrl"
+            name="checkoutUrl"
             type="url"
-            placeholder="Lemon Squeezy URL (opzionale)"
+            placeholder="Checkout URL (opzionale)"
             className="input flex-1 min-w-[260px] font-mono text-xs"
           />
           <button className="btn-primary px-4 py-2">+ Aggiungi taglia</button>
